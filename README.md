@@ -2,14 +2,14 @@
 1. [Description](#description)
 2. [Installation](#installation)
 3. [Commands](#commands)
+4. [Annotations](#annotations)
 
 ## Description
 A nice selfbot for discord
-Btw, [p] means prefix.
 
 ## Installation
 For installation you will need 
-- [Python latest](http://python.org/getit/)
+- [Python latest](http://python.org/getit/) **MAKE SURE TO ADD TO PATH**
 - [Git](http://git-scm.com) **DON'T CHANGE ANY OF THE SETTINGS**
 - discord.py which can be installed by right clicking somewhere on your desktop, and press `Git Bash here`.
   Then paste the following code with shift+ins: `pip install -U discord.py`
@@ -40,4 +40,29 @@ For installation you will need
 - `[p]server userinfo [user]` Shows information for a user, if None given it shows yours.
 - `[p]server roleinfo <role>` Shows information for a role.
 - `[p]download <download_url>` Downloads a file and puts it in the bots root folder so you don't have to.
-- `[p]
+- `[p]mentionset <mentionmsg>` Sets the message that the bot should send if you get mentioned.
+- `[p]whitelist add <user_id>` Adds a user to the whitelist so they can use your selfbot too!
+- `[p]whitelist remove <user_id>` Removes a user from the whitelist so they can't use your selfbot anymore.
+- `[p]lenny` Prints out a lenny face.
+- `[p]shrug` Shrugs.
+- `[p]shutdown` Shuts down the bot.
+- `[p]name <name>` Sets the bots name.
+- `[p]greentext <text>` Prints out a green text.
+- `[p]orangetext <text>` Prints out an orange text.
+- `[p]bluetext <text>` Prints out a blue text.
+- `[p]lmgtfy <search_quary>` Gives a lmgtfy link.
+- `[p]navyseal` Navyseal copypasta.
+- `[p]edgyshit` Edgyshit copypasta.
+- `[p]goodshit` Goodshit copypasta.
+- `[p]appache` Attack helicopter copypasta.
+- `[p]daddy` Daddy and me copypasta.
+- `[p]4chan` Found it on 4chan copypasta.
+- `[p]discorole <role>` Changes the role of a color every given amount of seconds.
+- `[p]discoroleforever` Changes the role of a color every given amount of seconds but doesn't stop.
+- `[p]triggered` The triggered meme.
+- `[p]setprefix` Changes the prefix of the bot.
+
+## Annotations
+[] = optional.
+<> = needed.
+[p] = the prefix you set.
