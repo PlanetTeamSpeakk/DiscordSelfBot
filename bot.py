@@ -357,7 +357,7 @@ async def on_message(message):
         await bot.send_message(message.channel, "Mention message set!")
         
     for person in message.mentions:
-        if mentionmsg is not "None":
+        if mentionmsg != "None":
             if person.id == bot.user.id:
                 await bot.send_message(message.channel, mentionmsg)
             
