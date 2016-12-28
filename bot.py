@@ -376,7 +376,7 @@ async def on_message(message):
         await bot.send_message(message.channel, "Removed user from the whitelist!")
     
     if await command(message, "lenny", False):
-        if message.author.id == bot.user.id
+        if message.author.id == bot.user.id:
             await bot.edit_message(message, "( ͡° ͜ʖ ͡°)")
         else:
             await bot.send_message(message.channel, "( ͡° ͜ʖ ͡°)")
