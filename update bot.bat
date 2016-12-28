@@ -45,13 +45,11 @@ GOTO updatebot
 
 :pythonmessage
 echo Couldn't find a valid Python ^>3.5 installation. Python needs to be installed and available in the PATH environment variable.
-echo https://twentysix26.github.io/Red-Docs/red_install_windows/#software
 PAUSE
 GOTO end
 
 :gitmessage
 echo Git is either not installed or not in the PATH environment variable. Install it again and add it to PATH like shown in the picture
-echo https://twentysix26.github.io/Red-Docs/red_install_windows/#software
 PAUSE
 
 :updatebot
