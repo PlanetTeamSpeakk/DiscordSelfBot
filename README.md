@@ -13,7 +13,7 @@ For installation you will need
 - [Git](http://git-scm.com) **DON'T CHANGE ANY OF THE SETTINGS**
 - discord.py which can be installed by right clicking somewhere on your desktop, and press `Git Bash here`.
   Then paste the following code with shift+ins: `pip install -U discord.py`
-- In the same Git Bash windows paste `git clone -b develop --single-branch https://github.com/PlanetTeamSpeakk/DiscordSelfBot.git Discord-SelfBot`
+- In the same Git Bash windows paste `git clone --single-branch https://github.com/PlanetTeamSpeakk/DiscordSelfBot.git Discord-SelfBot`
 
 ## Commands
 - `[p]restart` Restarts the bot.
