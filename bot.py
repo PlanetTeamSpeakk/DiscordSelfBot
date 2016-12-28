@@ -502,10 +502,17 @@ async def on_message(message):
             await bot.send_message(message.channel, invite)
   
     if await command(message, "spaminvitedm ", True):
-        msg = message.content[len(prefix + "spaminvitedm "):]
+        msg = " " + message.content[len(prefix + "spaminvitedm "):]
         invite = settings['invite']
+        sent = 0
         for member in message.server.members:
-            await bot.send_message(member, invite + " " + msg)
+            try:
+                await bot.send_message(member, invite + msg)
+                sent = sent + 1
+            except:
+                pass
+            await asyncio.sleep(3) # So Discord doesn't block you for sending too much messages
+        print("Sent an invite to {} people.".format(sent))
             
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
