@@ -20,28 +20,30 @@ with open("settings.json", "r") as settings_file:
     password = settings['password']
     whitelist = settings['whitelist']
     prefix = settings['prefix']
+    mentionmsg = settings['mentionmsg']
     bot = commands.Bot(command_prefix=prefix, description=description)
     if email=='email_here':
         if password=='password_here':
             if 'your_id' in whitelist:
                 if prefix=="prefix_here":
-                    print("First time setup, prepare your anus for some questions.")
-                    email = input("What's your Discord email address?\n")
-                    password = input("What's your Discord password?\n")
-                    id = input("What's your Discord user id?\n")
-                    prefix = input("What should your prefix be?\n")
-                    mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                    settings['email'] = email
-                    settings['password'] = password
-                    settings['prefix'] = prefix
-                    settings['whitelist'].remove('your_id')
-                    settings['whitelist'].append(id)
-                    settings['mentionmsg'] = mentionmsg
-                    bot = commands.Bot(command_prefix=prefix, description=description)
-                    settings_file = None
-                    with open("settings.json", "w") as settings_file:
-                        json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                    print("You're all set! Bot is starting")
+                    if mentionmsg=="mentionmsg_here":
+                        print("First time setup, prepare your anus for some questions.")
+                        email = input("What's your Discord email address?\n")
+                        password = input("What's your Discord password?\n")
+                        id = input("What's your Discord user id?\n")
+                        prefix = input("What should your prefix be?\n")
+                        mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
+                        settings['email'] = email
+                        settings['password'] = password
+                        settings['prefix'] = prefix
+                        settings['whitelist'].remove('your_id')
+                        settings['whitelist'].append(id)
+                        settings['mentionmsg'] = mentionmsg
+                        bot = commands.Bot(command_prefix=prefix, description=description)
+                        settings_file = None
+                        with open("settings.json", "w") as settings_file:
+                            json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+                        print("You're all set! Bot is starting")
     settings_file = None
     
 @bot.event
@@ -50,6 +52,9 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    if await command(message, "help", True):
+        await bot.send_message(message.channel, "All commands can be found here:\n<https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>")
+            
     if await command(message, "restart", True):
         await bot.send_message(message.channel, "Restarting...")
         bot.run(email, password)
