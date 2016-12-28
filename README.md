@@ -62,6 +62,8 @@ For installation you will need
 - `[p]triggered` The triggered meme.
 - `[p]setprefix` Changes the prefix of the bot.
 - `[p]flirting101` The flirting101 copypasta.
+- `[p]setinvite <invite>` Sets the invite link to spam for
+- `[p]spaminvite <times>` Spams the invite link of your server.
 
 ## Annotations
 [] = optional.
