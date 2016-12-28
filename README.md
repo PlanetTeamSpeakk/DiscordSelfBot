@@ -64,5 +64,7 @@ For installation you will need
 
 ## Annotations
 [] = optional.
+
 <> = needed.
+
 [p] = the prefix you set.
