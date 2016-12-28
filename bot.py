@@ -375,8 +375,11 @@ async def on_message(message):
             json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
         await bot.send_message(message.channel, "Removed user from the whitelist!")
     
-    if await command(message, "lenny", True):
-        await bot.send_message(message.channel, "( ͡° ͜ʖ ͡°)")
+    if await command(message, "lenny", False):
+        if message.author.id == bot.user.id
+            await bot.edit_message(message, "( ͡° ͜ʖ ͡°)")
+        else:
+            await bot.send_message(message.channel, "( ͡° ͜ʖ ͡°)")
       
     if await command(message, "shrug", True):
         await bot.send_message(message.channel, "¯\_(ツ)_/¯")
@@ -505,14 +508,17 @@ async def on_message(message):
         msg = " " + message.content[len(prefix + "spaminvitedm "):]
         invite = settings['invite']
         sent = 0
+        members = []
         for member in message.server.members:
+            members.append(member)
+        for member in members:
             try:
                 await bot.send_message(member, invite + msg)
                 sent = sent + 1
+                print("Sent an invite to {} people.".format(sent))
             except:
                 pass
-            await asyncio.sleep(3) # So Discord doesn't block you for sending too much messages
-        print("Sent an invite to {} people.".format(sent))
+            await asyncio.sleep(30)
             
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
