@@ -61,6 +61,7 @@ For installation you will need
 - `[p]discoroleforever` Changes the role of a color every given amount of seconds but doesn't stop.
 - `[p]triggered` The triggered meme.
 - `[p]setprefix` Changes the prefix of the bot.
+- `[p]flirting101` The flirting101 copypasta.
 
 ## Annotations
 [] = optional.
