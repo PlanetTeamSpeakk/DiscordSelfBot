@@ -12,8 +12,9 @@ import asyncio
 description = "A Discord Selfbot written by PlanetTeamSpeak#4157."
 if not os.path.exists("settings.json"):
     with open("settings.json", "w") as settings:
-        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
+        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
         settings = None
+
 with open("settings.json", "r") as settings_file:
     settings = json.load(settings_file)
     email = settings['email']
@@ -21,29 +22,33 @@ with open("settings.json", "r") as settings_file:
     whitelist = settings['whitelist']
     prefix = settings['prefix']
     mentionmsg = settings['mentionmsg']
+    invite = settings['invite']
     bot = commands.Bot(command_prefix=prefix, description=description)
     if email=='email_here':
         if password=='password_here':
             if 'your_id' in whitelist:
                 if prefix=="prefix_here":
                     if mentionmsg=="mentionmsg_here":
-                        print("First time setup, prepare your anus for some questions.")
-                        email = input("What's your Discord email address?\n")
-                        password = input("What's your Discord password?\n")
-                        id = input("What's your Discord user id?\n")
-                        prefix = input("What should your prefix be?\n")
-                        mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                        settings['email'] = email
-                        settings['password'] = password
-                        settings['prefix'] = prefix
-                        settings['whitelist'].remove('your_id')
-                        settings['whitelist'].append(id)
-                        settings['mentionmsg'] = mentionmsg
-                        bot = commands.Bot(command_prefix=prefix, description=description)
-                        settings_file = None
-                        with open("settings.json", "w") as settings_file:
-                            json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                        print("You're all set! Bot is starting")
+                        if invite=="invite_here":
+                            print("First time setup, prepare your anus for some questions.")
+                            email = input("What's your Discord email address?\n")
+                            password = input("What's your Discord password?\n")
+                            id = input("What's your Discord user id?\n")
+                            prefix = input("What should your prefix be?\n")
+                            mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
+                            invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
+                            settings['email'] = email
+                            settings['password'] = password
+                            settings['prefix'] = prefix
+                            settings['whitelist'].remove('your_id')
+                            settings['whitelist'].append(id)
+                            settings['mentionmsg'] = mentionmsg
+                            settings['invite'] = invite
+                            bot = commands.Bot(command_prefix=prefix, description=description)
+                            settings_file = None
+                            with open("settings.json", "w") as settings_file:
+                                json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+                            print("You're all set! Bot is starting")
     settings_file = None
     
 @bot.event
@@ -348,12 +353,11 @@ async def on_message(message):
     if await command(message, "mentionset ", True):
         new_mentionmsg = message.content[len(prefix + "mentionset "):]
         settings['mentionmsg'] = new_mentionmsg
-        with open("settings.json", "w") as settings_file:
-            json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+        save_settings(settings)
         await bot.send_message(message.channel, "Mention message set!")
         
     for person in message.mentions:
-        if mentionmsg is not None:
+        if mentionmsg is not "None":
             if person.id == bot.user.id:
                 await bot.send_message(message.channel, mentionmsg)
             
@@ -476,13 +480,27 @@ async def on_message(message):
     if await command(message, "setprefix ", True):
         new_prefix = message.content[len(prefix + "setprefix "):]
         settings['prefix'] = new_prefix
-        with open("settings.json", "w") as settings_file:
-            json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+        save_settings(settings)
         await bot.send_message(message.channel, "Prefix set! Restart the bot for the changes to take affect.")
     
     if await command(message, "flirting101", True):
         await bot.send_message("Hey, sorry I saw your profile and I just thought you looked cute in your picture, I really wanted to tell you that)) It's really rare to see girls playing video games haha! I don't know why its a guy thing honestly im like really against misogyny and like ill be the one in the kitchen making sandwiches. We should really play l4d2 sometime its a really cool zombie game with a lot of scary moments, but don't worry ill be there to protect you :wink: sorry that wasnt flirting I swear Im just trying to be friendly I really like your profile picture sorry was that too far? Really sorry i'm really shy I don't go out much haha add me on skype we should talk more you look really nice and fun xxx")
     
+    if await command(message, "setinvite ", True):
+        invite = message.content[len(prefix + "setinvite "):]
+        settings['invite'] = invite
+        save_settings(settings)
+        
+    if await command(message, "spaminvite ", True):
+        invite = settings['invite']
+        if invite is "None":
+            await bot.send_message(message.channel, "You haven't set an invite link, set one with {}setinvite <invite>".format(prefix))
+        times = int(message.content[len(prefix + "spaminvite "):])
+        time = 0
+        while time < times:
+            time = time + 1
+            await bot.send_message(message.channel, invite)
+            
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
         if message.author.id in whitelist:
@@ -500,5 +518,9 @@ async def command(message, cmd, del_msg):
             return False
     else:
         return False
+        
+def save_settings(settings):
+    with open("settings.json", "w") as settings_file:
+        json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
         
 bot.run(email, password)
