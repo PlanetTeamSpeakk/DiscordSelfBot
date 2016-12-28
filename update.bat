@@ -17,11 +17,8 @@ git.exe --version > NUL 2>&1
 IF %ERRORLEVEL% NEQ 0 GOTO gitmessage
 title Updating Bot...
 echo Updating Bot...
-git stash
-git pull
 
 echo.
-title Updating requirements...
 echo Updating requirements...
 ::Attempts to start py launcher without relying on PATH
 %SYSTEMROOT%\py.exe --version > NUL 2>&1
@@ -45,16 +42,17 @@ GOTO updatebot
 
 :pythonmessage
 echo Couldn't find a valid Python ^>3.5 installation. Python needs to be installed and available in the PATH environment variable.
+echo https://twentysix26.github.io/Red-Docs/red_install_windows/#software
 PAUSE
 GOTO end
 
 :gitmessage
 echo Git is either not installed or not in the PATH environment variable. Install it again and add it to PATH like shown in the picture
+echo https://twentysix26.github.io/Red-Docs/red_install_windows/#software
 PAUSE
 
 :updatebot
 del bot.py
-title Downloading Bot.py
 start /WAIT bitsadmin.exe /transfer "Downloading bot.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/bot.py %~dp0\bot.py
 
 :end
