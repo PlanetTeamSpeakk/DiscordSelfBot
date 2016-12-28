@@ -64,6 +64,7 @@ For installation you will need
 - `[p]flirting101` The flirting101 copypasta.
 - `[p]setinvite <invite>` Sets the invite link to spam for
 - `[p]spaminvite <times>` Spams the invite link of your server.
+- `[p]spaminvitedm <message>` Sends the invite link of your server to everyone in the server where this command was sent to.
 
 ## Annotations
 [] = optional.
