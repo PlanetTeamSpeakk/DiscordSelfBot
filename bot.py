@@ -11,11 +11,22 @@ import asyncio
 import re
 from subprocess import check_output
 try:
+    from pyshorteners import Shortener as shortener
+except:
+    print("You don't have pyshorteners installed, installing it now...")
+    try:
+        check_output("pip3 install pyshorteners", shell=True)
+        import pyshorteners
+        print("Pyshorteners succesfully installed.")
+    except:
+        sys.exit("Pyshorteners didn't succesfully install, exiting...")
+try:
     from pyfiglet import figlet_format
 except:
     print("You don't have pyfiglet installed, installing it now...")
     try:
         check_output("pip3 install pyfiglet", shell=True)
+        import pyfiglet
         print("Pyfiglet succesfully installed.")
     except:
         sys.exit("Pyfiglet didn't succesfully install, exiting...")
@@ -25,11 +36,12 @@ except:
     print("You don't have FFMpy installed, installing it now...")
     try:
         check_output("pip3 install ffmpy", shell=True)
+        import ffmpy
         print("FFMpy succesfully installed.")
     except:
         sys.exit("FFMpy could not be installed, exiting...")
-        
-description = "A Discord bot written by PlanetTeamSpeak#4157."
+    
+description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
 if not os.path.exists("settings.json"):
     with open("settings.json", "w") as settings:
         json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here', 'mentionmode': 'mentionmode_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
@@ -658,7 +670,7 @@ async def on_message(message):
                               font='cybermedium')
         if len(msg) > 2000:
             if message.author.id == bot.user.id:
-                await bot.edit_message(message, "```{}```".format(error))
+                await bot.edit_message(message, "```fix\n{}```".format(error))
             else:
                 await bot.send_message(message.channel, box(error))
         else:
@@ -753,6 +765,14 @@ async def on_message(message):
         psize = "8" + "="*random.randint(0, 30) + "D"
         await bot.send_message(message.channel, "{} penis size: {}".format(user.mention, psize))
         
+    if await command(message, "shorten ", True):
+        url = message.content[len(prefix + "shorten "):]
+        shorten = shortener('Bitly', bitly_token='dd800abec74d5b12906b754c630cdf1451aea9e0')
+        if not url == "":
+            await bot.send_message(message.channel, "{}, here you go <{}>.".format(message.author.mention, shorten.short(url)))
+        else:
+            await bot.send_message(message.channel, "You think I can short an empty string for you? That's not gonna work.")
+       
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
         if message.author.id in whitelist:
