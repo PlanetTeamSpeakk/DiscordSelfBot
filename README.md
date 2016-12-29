@@ -65,6 +65,12 @@ For installation you will need
 - `[p]setinvite <invite>` Sets the invite link to spam for
 - `[p]spaminvite <times>` Spams the invite link of your server.
 - `[p]spaminvitedm <message>` Sends the invite link of your server to everyone in the server where this command was sent to.
+- `[p]discrim <discrim_number>` Tells you all the people you can see with the discrim you gave.
+- `[p]emoteurl <emote_name>` Gives you an url for the given CUSTOM emote.
+- `[p]genbotoauth <bot_name>` Generates an oauth url for the given bot, names no mentions.
+- `[p]genoauth <id>` Generates an oauth url for the given id.
+- `[p]calc <problem>` Calculates a math problem so you don't have to.
+- `[p]avatar <user_name>` Shows the avatar of the given user, names no mentions.
 
 ## Annotations
 [] = optional.
