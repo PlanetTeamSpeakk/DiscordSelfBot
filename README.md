@@ -75,6 +75,7 @@ For installation you will need
 - `[p]convert <file_url>` Converts stuff like mp3, mp4, png to anything you like.
 - `[p]ascii <text>` Converts text to ascii.
 - `[p]penis <user_name>` Tells you how long someone's penis is, 100% accurate.
+- `[p]shorten <url>` Shortens a long url using bit.ly
 
 ## Annotations
 [] = optional.
