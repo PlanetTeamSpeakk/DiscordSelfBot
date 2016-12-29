@@ -82,7 +82,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if await command(message, "help", True):
-        await bot.send_message(message.channel, "All commands can be found here:\n<https://github.com/PlanetTeamSpeakk/DiscordBot#commands>")
+        await bot.send_message(message.channel, "All commands can be found here:\n<https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>")
             
     if await command(message, "restart", True):
         await bot.send_message(message.channel, "Restarting...")
