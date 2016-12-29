@@ -9,8 +9,27 @@ import datetime
 import sys
 import asyncio
 import re
-
-description = "A Discord Selfbot written by PlanetTeamSpeak#4157."
+from subprocess import check_output
+try:
+    from pyfiglet import figlet_format
+except:
+    print("You don't have pyfiglet installed, installing it now...")
+    try:
+        check_output("pip3 install pyfiglet", shell=True)
+        print("Pyfiglet succesfully installed.")
+    except:
+        sys.exit("Pyfiglet didn't succesfully install, exiting...")
+try:
+    import ffmpy
+except:
+    print("You don't have FFMpy installed, installing it now...")
+    try:
+        check_output("pip3 install ffmpy", shell=True)
+        print("FFMpy succesfully installed.")
+    except:
+        sys.exit("FFMpy could not be installed, exiting...")
+        
+description = "A Discord bot written by PlanetTeamSpeak#4157."
 if not os.path.exists("settings.json"):
     with open("settings.json", "w") as settings:
         json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
@@ -59,7 +78,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     if await command(message, "help", True):
-        await bot.send_message(message.channel, "All commands can be found here:\n<https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>")
+        await bot.send_message(message.channel, "All commands can be found here:\n<https://github.com/PlanetTeamSpeakk/DiscordBot#commands>")
             
     if await command(message, "restart", True):
         await bot.send_message(message.channel, "Restarting...")
@@ -360,6 +379,9 @@ async def on_message(message):
     for person in message.mentions:
         if mentionmsg != "None":
             if person.id == bot.user.id:
+                await asyncio.sleep(2)
+                await bot.send_typing(message.channel)
+                await asyncio.sleep(2)
                 await bot.send_message(message.channel, mentionmsg)
             
     if await command(message, "whitelist add ", True):
@@ -425,7 +447,7 @@ async def on_message(message):
         await bot.send_message(message.channel, ":syringe::knife: :syringe::knife::syringe::knife:edgy shit edgY sHit :knife:thats :gun:some edgy:syringe::syringe: shit right :knife:th:knife: ere:syringe::syringe::syringe: right there :smoking::smoking:if i do ƽaү so my selｆ :gun:i say so :gun: thats what im talking about right there right there (chorus: ʳᶦᵍʰᵗ ᵗʰᵉʳᵉ) mMMMMᎷМ:gun: :knife::knife::knife:НO0ОଠＯOOＯOОଠଠOoooᵒᵒᵒᵒᵒᵒᵒᵒᵒ:knife::knife::knife: :gun: :syringe::syringe: :knife::knife: Edgy shit")
     
     if await command(message, "goodshit", True):
-        await bot.send_message(message.channel, "sign me the FUCK up :ok_hand::eyes::ok_hand::eyes::ok_hand::eyes::ok_hand::eyes::ok_hand::eyes: good shit go౦ԁ sHit:ok_hand: thats :heavy_check_mark: some good:ok_hand::ok_hand:shit right:ok_hand::ok_hand:there:ok_hand::ok_hand::ok_hand: right:heavy_check_mark:there :heavy_check_mark::heavy_check_mark:if i do ƽaү so my self :100: i say so :100: thats what im talking about right there right there (chorus: ʳᶦᵍʰᵗ ᵗʰᵉʳᵉ) mMMMMᎷМ:100: :ok_hand::ok_hand: :ok_hand:НO0ОଠOOOOOОଠଠOoooᵒᵒᵒᵒᵒᵒᵒᵒᵒ:ok_hand: :ok_hand::ok_hand: :ok_hand: :100: :ok_hand: :eyes: :eyes: :eyes: :ok_hand::ok_hand:Good shit")
+        await bot.send_message(message.channel, "sign me the FUCK up :ok_hand::eyes::ok_hand::eyes::ok_hand::eyes::ok_hand::eyes::ok_hand::eyes: good shit go౦ԁ sHit:ok_hand: thats :heavy_check_mark: some good:ok_hand::ok_hand:shit right:ok_hand::ok_hand:there:ok_hand::ok_hand::ok_hand: right:heavy_check_mark:there :heavy_check_mark::heavy_check_mark:if i do ƽaү so my  :100: i say so :100: thats what im talking about right there right there (chorus: ʳᶦᵍʰᵗ ᵗʰᵉʳᵉ) mMMMMᎷМ:100: :ok_hand::ok_hand: :ok_hand:НO0ОଠOOOOOОଠଠOoooᵒᵒᵒᵒᵒᵒᵒᵒᵒ:ok_hand: :ok_hand::ok_hand: :ok_hand: :100: :ok_hand: :eyes: :eyes: :eyes: :ok_hand::ok_hand:Good shit")
     
     if await command(message, "appache", True):
         await bot.send_message(message.channel, "I sexually Identify as an Attack Helicopter. Ever since I was a boy I dreamed of soaring over the oilfields dropping hot sticky loads on disgusting foreigners. People say to me that a person being a helicopter is Impossible and I’m fucking retarded but I don’t care, I’m beautiful. I’m having a plastic surgeon install rotary blades, 30 mm cannons and AMG-114 Hellfire missiles on my body. From now on I want you guys to call me “Apache” and respect my right to kill from above and kill needlessly. If you can’t accept me you’re a heliphobe and need to check your vehicle privilege. Thank you for being so understanding.")
@@ -613,6 +635,104 @@ async def on_message(message):
         em.add_field(name=user.mention + "'s avatar", value=avatar)
         em.set_image(url=avatar)
         await bot.send_message(message.channel, embed=em)
+        
+    if await command(message, "ascii ", True):
+        text = message.content[len(prefix + "ascii "):]
+        msg = str(figlet_format(text, font='cybermedium'))
+        if msg[0] == " ":
+            msg = "." + msg[1:]
+        error = figlet_format('LOL, that\'s a bit too long.',
+                              font='cybermedium')
+        if len(msg) > 2000:
+            await bot.send_message(message.channel, box(error))
+        else:
+            await bot.send_message(message.channel, "```fix\n{}```".format(msg))
+        
+    if await command(message, "convert ", True):
+        file_url = message.content[len(prefix + "convert "):]
+        await bot.send_message(message.channel, "What is the output format?")
+        await asyncio.sleep(0.2)
+        output_format = await bot.wait_for_message(timeout=15, author=message.author)
+        if output_format is None:
+            await bot.send_message(message.channel, "K then not.")
+            return
+        convertmsg = await bot.send_message(message.channel, "Setting up...")
+        # The copy of rickrolled part.
+        if file_url == "rickrolled":
+            file_url = "https://raw.githubusercontent.com/PlanetTeamSpeakk/PTSCogs-attributes/master/rickrolled.ogg"
+            meme = True
+            number = 'rickrolled_' + ''.join([random.choice('0123456789') for x in range(6)])
+            if output_format == "rick astley":
+                input_format = "ogg"
+                output_format = "mp3"
+        # The copy of We are number one part.
+        elif file_url == "lazytown":
+            meme = True
+            file_url = "https://raw.githubusercontent.com/PlanetTeamSpeakk/PTSCogs-attributes/master/numberone.ogg"
+            number = 'numberone_' + ''.join([random.choice('0123456789') for x in range(6)])
+            if output_format == "number one":
+                input_format = "ogg"
+                output_format = "mp3"
+        else:
+            meme = False
+            number = ''.join([random.choice('0123456789') for x in range(6)])
+        if meme is False:
+            form_found = False
+            for i in range(6):
+                if file_url[len(file_url) - i:].startswith("."):
+                    input_format = file_url[len(file_url) - i:]
+                    form_found = True
+                else:
+                    if form_found is not True:
+                        form_found = False
+            if form_found is not True:
+                await bot.edit_message(convertmsg, "Your link is corrupt, it should end with something like .mp3, .mp4, .png, etc.")
+                print(form_found)
+                return
+        if not os.path.exists("converter"):
+            os.makedirs("converter")
+        input = "converter/{}.{}".format(number, input_format)
+        output = "converter/{}.{}".format(number, output_format.content)
+        outputname = "{}.{}".format(number, output_format.content)
+        await bot.edit_message(convertmsg, "Downloading...")
+        try:
+            async with aiohttp.get(file_url) as r:
+                file = await r.content.read()
+            with open(input, 'wb') as f:
+                f.write(file)
+        except:
+            await bot.edit_message(convertmsg, "Could not download the file.")
+            try:
+                os.remove(input)
+            except:
+                pass
+            return
+        try:
+            converter = ffmpy.FFmpeg(inputs={input: "-y"}, outputs={output: "-y"})
+            await bot.edit_message(convertmsg, "Converting...")
+            converter.run()
+        except:
+            await bot.edit_message(convertmsg, "Could not convert your file, an error occured.")
+            try:
+                os.remove(input)
+                os.remove(output)
+            except:
+                pass
+            return
+        await bot.send_file(message.channel, content="Convertion done!", fp=output, filename=outputname)
+        await bot.delete_message(convertmsg)
+        os.remove(input)
+        os.remove(output)
+        
+    if await command(message, "penis", True):
+        user = message.content[len(prefix + "penis "):]
+        if user is "":
+            user = bot.user
+        else:
+            user = discord.utils.get(message.server.members, name=user)
+        random.seed(user.id)
+        psize = "8" + "="*random.randint(0, 30) + "D"
+        await bot.send_message(message.channel, "{} penis size: {}".format(user.mention, psize))
         
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
