@@ -13,7 +13,7 @@ For installation you will need
 - [Git](http://git-scm.com) **DON'T CHANGE ANY OF THE SETTINGS**
 - discord.py which can be installed by right clicking somewhere on your desktop, and press `Git Bash here`.
   Then paste the following code with shift+ins: `pip install -U discord.py`
-- In the same Git Bash windows paste `git clone --single-branch https://github.com/PlanetTeamSpeakk/DiscordSelfBot.git Discord-SelfBot`
+- In the same Git Bash window paste `git clone --single-branch https://github.com/PlanetTeamSpeakk/DiscordSelfBot.git Discord-SelfBot`
 
 ## Commands
 - `[p]restart` Restarts the bot.
@@ -58,7 +58,7 @@ For installation you will need
 - `[p]daddy` Daddy and me copypasta.
 - `[p]4chan` Found it on 4chan copypasta.
 - `[p]discorole <role>` Changes the role of a color every given amount of seconds.
-- `[p]discoroleforever` Changes the role of a color every given amount of seconds but doesn't stop.
+- `[p]discoroleforever <role>` Changes the role of a color every given amount of seconds but doesn't stop.
 - `[p]triggered` The triggered meme.
 - `[p]setprefix` Changes the prefix of the bot.
 - `[p]flirting101` The flirting101 copypasta.
@@ -71,6 +71,10 @@ For installation you will need
 - `[p]genoauth <id>` Generates an oauth url for the given id.
 - `[p]calc <problem>` Calculates a math problem so you don't have to.
 - `[p]avatar <user_name>` Shows the avatar of the given user, names no mentions.
+- `[p]mentionmode <mode>` Sets the mention mode (legit or fast)
+- `[p]convert <file_url>` Converts stuff like mp3, mp4, png to anything you like.
+- `[p]ascii <text>` Converts text to ascii.
+- `[p]penis <user_name>` Tells you how long someone's penis is, 100% accurate.
 
 ## Annotations
 [] = optional.
