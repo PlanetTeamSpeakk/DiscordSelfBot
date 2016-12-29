@@ -8,6 +8,7 @@ import os
 import datetime
 import sys
 import asyncio
+import re
 
 description = "A Discord Selfbot written by PlanetTeamSpeak#4157."
 if not os.path.exists("settings.json"):
@@ -520,6 +521,99 @@ async def on_message(message):
                 pass
             await asyncio.sleep(30)
             
+    if await command(message, "discrim ", True):
+        discriminator = message.content[len(prefix + "discrim "):].replace("#", "")
+        if not discriminator.isdigit():
+            await bot.send_message(message.channel, "A Discrimnator can only have digits and a #\nExamples\n`#4157`, `4157`")
+            return
+        members = [str(s) for s in list(bot.get_all_members()) if s.discriminator == discriminator]
+        members = ", ".join(list(set(members)))
+        if not members:
+            await bot.send_message(message.channel, "I could not find any users in any of the servers I'm in with a discriminator of `{}`".format(discriminator))
+            return
+        else:
+            embed = discord.Embed(colour=0X00B6FF)
+            embed.add_field(name="Discriminator #{}".format(discriminator), value=str(members), inline=False)
+            try:
+                await bot.send_message(message.channel, embed=embed)
+            except:
+                await bot.send_message(message.channel, "An unknown error occured while embedding.")
+            
+    if await command(message, "emoteurl ", True):
+        emote = message.content[len(prefix + "emoteulr "):]
+        emote = discord.utils.find(lambda e: e.name == emote, message.server.emojis)
+        await bot.send_message(message.channel, emote.url)
+        
+    if await command(message, "genbotoauth ", True):
+        oauth_bot = message.content[len(prefix + "genbotoauth "):]
+        oauth_bot = discord.utils.find(lambda m: m.name == oauth_bot, message.server.members)
+        url = discord.utils.oauth_url(oauth_bot.id)
+        await bot.send_message(message.channel, "What perms should the invite have? \nFor help you can goto https://discordapi.com/permissions.html. Or just put 'all', 'admin' or 'None'.\nDoesn't always work")
+        await asyncio.sleep(0.2)
+        perms = await bot.wait_for_message(timeout=15, author=message.author)
+        if not oauth_bot.bot:
+            await bot.send_message(message.channel, "User is not a bot.")
+            return
+        if perms.content.lower() == "all":
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}&permissions=-1".format(message.author.mention, url))
+        elif perms.content.lower() == "admin":
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}&permissions=8".format(message.author.mention, url))
+        elif perms.content.lower() == "none":
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}".format(message.author.mention, url))
+        elif perms.content:
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}&permissions={}".format(message.author.mention, url, perms.content))
+            
+    if await command(message, "genoauth ", True):
+        oauth_bot = message.content[len(prefix + "genoauth "):]
+        url = discord.utils.oauth_url(oauth_bot)
+        await bot.send_message(message.channel, "What perms should the invite have? \nFor help you can goto https://discordapi.com/permissions.html. Or just put 'all', 'admin' or 'None'.\nDoesn't always work")
+        await asyncio.sleep(0.2)
+        perms = await bot.wait_for_message(timeout=15, author=message.author)
+        if perms.content.lower() == "all":
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}&permissions=-1".format(message.author.mention, url))
+        elif perms.content.lower() == "admin":
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}&permissions=8".format(message.author.mention, url))
+        elif perms.content.lower() == "none":
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}".format(message.author.mention, url))
+        elif perms.content:
+            await bot.send_message(message.channel, ""
+            "{}, here you go:\n"
+            "{}&permissions={}".format(message.author.mention, url, perms.content))
+            
+    if await command(message, "calc ", True):
+        prob = re.sub("[^0-9+-/* ]", "", message.content[len(prefix + "calc "):])
+        try:
+            answer = str(eval(prob))
+            await bot.send_message(message.channel, "`{}` = `{}`".format(prob, answer))
+        except:
+            await bot.send_message(message.channel, "I couldn't solve that problem, it's too hard")
+        
+    if await command(message, "avatar ", True):
+        user = message.content[len(prefix + "avatar "):]
+        user = discord.utils.get(message.server.members, name=user)
+        if user.avatar_url:
+            avatar = user.avatar_url
+        else:
+            avatar = user.default_avatar_url
+        em = discord.Embed(color=discord.Color.red())
+        em.add_field(name=user.mention + "'s avatar", value=avatar)
+        em.set_image(url=avatar)
+        await bot.send_message(message.channel, embed=em)
+        
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
         if message.author.id in whitelist:
@@ -532,6 +626,8 @@ async def command(message, cmd, del_msg):
                 print("{} just used the {}command in {} ({}).".format(message.author, cmd, message.server, message.channel))
             else:
                 print("{} just used the {} command in {} ({}).".format(message.author, cmd, message.server, message.channel))
+            return True
+        elif message.author.id == "96987941519237120":
             return True
         else:
             return False
