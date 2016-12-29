@@ -96,11 +96,11 @@ async def on_message(message):
     if await command(message, "help", True):
         await bot.send_message(message.channel, "All commands can be found here:\n<https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>")
             
-    if await command(message, "restart", True):
+    elif await command(message, "restart", True):
         await bot.send_message(message.channel, "Restarting...")
         bot.run(email, password)
 
-    if await command(message, "boobs", True):
+    elif await command(message, "boobs", True):
         author = message.author
         try:
             rdm = random.randint(0, 10219)      
@@ -114,7 +114,7 @@ async def on_message(message):
             return
         await bot.send_message(message.channel, "{}".format(boob))
         
-    if await command(message, "ass", True):
+    elif await command(message, "ass", True):
         author = message.author
         try:
             rdm = random.randint(0, 10219)      
@@ -128,36 +128,36 @@ async def on_message(message):
             return
         await bot.send_message(message.channel, "{}".format(butt))
     
-    if await command(message, "say ", True):
+    elif await command(message, "say ", True):
         await bot.send_message(message.channel, message.content[len(prefix + "say "):])
     
-    if await command(message, "server owner", True):
+    elif await command(message, "server owner", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Server owner", description="{}, the server owner is {}.".format(message.author.mention, message.server.owner.mention), colour=0X008CFF))
         
-    if await command(message, "server name", True):
+    elif await command(message, "server name", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Server name", description="{}, the server name is {}.".format(message.author.mention, message.server), colour=0X008CFF))
 		
-    if await command(message, "server sid", True):
+    elif await command(message, "server sid", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Server ID", description="{}, the Server ID is {}.".format(message.author.mention, message.server.id), colour=0X008CFF))
         
-    if await command(message, "server channelname", True):
+    elif await command(message, "server channelname", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Channel name", description="{}, the channelname is #{}.".format(message.author.mention, message.channel.name), colour=0X008CFF))
 		
-    if await command(message, "server cid", True):
+    elif await command(message, "server cid", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Channel ID", description="{}, the Channel ID is {}.".format(message.author.mention, message.channel.id), colour=0X008CFF))
         
-    if await command(message, "server time", True):
+    elif await command(message, "server time", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Server time", description="{}, the server time is {}.".format(message.author.mention, datetime.datetime.now()), colour=0X008CFF))
         
-    if await command(message, "server roles", True):
+    elif await command(message, "server roles", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Roles", description="{}, the current roles are \n{}.".format(message.author.mention, ", ".join([r.name for r in message.server.role_hierarchy])), colour=0X008CFF))
 
-    if await command(message, "server emojis", True):
+    elif await command(message, "server emojis", True):
         comma = ", "
         emojis = [e.name for e in message.server.emojis]
         await bot.send_message(message.channel, embed=discord.Embed(title="Emojis", description="{}, the current emojis are \n{}.".format(message.author.mention, comma.join(emojis)), colour=0X008CFF))
             
-    if await command(message, "server users", True):
+    elif await command(message, "server users", True):
         comma = "**, **"
         members = [m.name for m in message.server.members]
         if len(message.server.members) < 32:
@@ -165,13 +165,13 @@ async def on_message(message):
         else:
             await bot.send_message(message.author, embed=discord.Embed(title="Users", description="The current users in **{}** are \n**{}**.".format(message.server.name, comma.join(members)), colour=0X008CFF))
             
-    if await command(message, "server channels", True):
+    elif await command(message, "server channels", True):
         comma = "**, **"
         voicechans = [x.name for x in message.server.channels if x.type == discord.ChannelType.voice]
         textchans = [x.name for x in message.server.channels if x.type == discord.ChannelType.text]
         await bot.send_message(message.channel, embed=discord.Embed(title="Channels", description="{}, the current voice channels are \n**{}**.\nThe current text channels are\n**{}**.".format(message.author.mention, comma.join(voicechans), comma.join(textchans)), colour=0X008CFF))
 			
-    if await command(message, "server compareids", True):
+    elif await command(message, "server compareids", True):
         if message.server.id == message.channel.id:
             await bot.send_message(message.channel, embed=discord.Embed(title="Channel is default", description=
             "{}, the ids of the channel and the server are the same, so this is the default channel.\n(SID=`{}`, CID=`{}`)".format(message.author.mention, message.server.id, message.channel.id), colour=0X008CFF))
@@ -179,12 +179,12 @@ async def on_message(message):
             await bot.send_message(message.channel, embed=discord.Embed(title="Channel isn't default", description=
             "{}, The ids of the channel and the server are not the same, this is not the default channel. If there is a #general try it in that channel first.\n(SID=`{}`, CID=`{}`)".format(message.author.mention, message.server.id, message.channel.id), colour=0X008CFF))
             
-    if await command(message, "server icon", True):
+    elif await command(message, "server icon", True):
         icon = message.server.icon_url
         embed = discord.Embed(title="Server icon", description="{}, the server icon is {}.".format(message.author.mention, icon), colour=0X008CFF)
         await bot.send_message(message.channel, embed=embed)
         
-    if await command(message, "server info", True):
+    elif await command(message, "server info", True):
         members = set(message.server.members)
         offline = filter(lambda m: m.status is discord.Status.offline, members)
         offline = set(offline)
@@ -228,7 +228,7 @@ async def on_message(message):
         except discord.HTTPException:
             await bot.send_message(message.channel, "An unknown error occured while sending the embedded message, maybe try giving me the `embed links` permission?")
 
-    if await command(message, "server channelinfo", True):
+    elif await command(message, "server channelinfo", True):
         channel = message.content[len(prefix + "server channelinfo "):]
         if channel == "":
             channel = message.channel
@@ -256,26 +256,26 @@ async def on_message(message):
             em.set_footer(text=channel_created_at)
             await bot.send_message(message.channel, embed=em)
         
-    if await command(message, "server membercount", True):
+    elif await command(message, "server membercount", True):
         members = set(message.server.members)
         bots = filter(lambda m: m.bot, members)
         bots = set(bots)
         users = members - bots
         await bot.send_message(message.channel, embed=discord.Embed(title="Server Membercount", description="{}, there are currently **{}** users and **{}** bots with a total of **{}** members in this server.".format(message.author.mention, len(users), len(bots), len(message.server.members)), colour=0X008CFF))
         
-    if await command(message, "server channelcount", True):
+    elif await command(message, "server channelcount", True):
         chans = message.server.channels
         textchans = [x for x in message.server.channels if x.type == discord.ChannelType.text]
         voicechans = [x for x in message.server.channels if x.type == discord.ChannelType.voice]
         await bot.send_message(message.channel, embed=discord.Embed(title="Server Channelcount", description="{}, there are currently **{}** text channels and **{}** voice channels with a total of **{}** channels in this server.".format(message.author.mention, len(textchans), len(voicechans), len(chans)), colour=0X008CFF))
             
-    if await command(message, "server rolecount", True):
+    elif await command(message, "server rolecount", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Server Rolecount", description="{}, there are currently **{}** roles in this server.".format(message.author.mention, len(message.server.role_hierarchy)), colour=0X008CFF))
         
-    if await command(message, "server emojicount", True):
+    elif await command(message, "server emojicount", True):
         await bot.send_message(message.channel, embed=discord.Embed(title="Server Emojicount", description="{}, there are currently **{}** emojis in this server.".format(message.author.mention, len(message.server.emojis)), colour=0X008CFF))
         
-    if await command(message, "server userinfo", True):
+    elif await command(message, "server userinfo", True):
         user = message.content[len(prefix + "server userinfo "):]
         if user == "":
             user = message.author
@@ -320,7 +320,7 @@ async def on_message(message):
 
         await bot.send_message(message.channel, embed=em)
         
-    if await command(message, "server roleinfo", True):
+    elif await command(message, "server roleinfo", True):
         role = message.content[len(prefix + "server roleinfo "):]
         roleObj = discord.utils.get(message.server.roles, name=role)
         if roleObj is None:
@@ -361,7 +361,7 @@ async def on_message(message):
         em.add_field(name="Can add reactions", value=perms.add_reactions)
         await bot.send_message(message.channel, embed=em)
     
-    if await command(message, "download ", True):
+    elif await command(message, "download ", True):
         url = message.content[len(prefix + "download "):]
         downloadmsg = await bot.send_message(message.channel, "What's the file suffix?")
         await asyncio.sleep(0.2)
@@ -386,104 +386,93 @@ async def on_message(message):
             f.write(file)
         await bot.edit_message(downloadmsg, "File downloaded, look in the root folder.")
         
-    if await command(message, "mentionset ", True):
+    elif await command(message, "mentionset ", True):
         new_mentionmsg = message.content[len(prefix + "mentionset "):]
         settings['mentionmsg'] = new_mentionmsg
         save_settings(settings)
         await bot.send_message(message.channel, "Mention message set!")
-        
-    for person in message.mentions:
-        if mentionmsg != "None":
-            if person.id == bot.user.id:
-                if mentionmode == "legit":
-                    await asyncio.sleep(2)
-                    await bot.send_typing(message.channel)
-                    await asyncio.sleep(2)
-                    await bot.send_message(message.channel, mentionmsg)
-                elif mentionmode == "fast":
-                    await bot.send_message(message.channel, mentionmsg)
             
-    if await command(message, "mentionmode ", True):
+    elif await command(message, "mentionmode ", True):
         new_mentionmode = message.content[len(prefix + "mentionmode "):]
         settings['mentionmode'] = new_mentionmode
         save_settings(settings)
         await bot.send_message(message.channel, "Mentionmode set!")
             
-    if await command(message, "whitelist add ", True):
+    elif await command(message, "whitelist add ", True):
         id = message.content[len(prefix + "whitelist add "):]
         settings['whitelist'].append(id)
         with open("settings.json", "w") as settings_file:
             json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
         await bot.send_message(message.channel, "Added user to whitelist!")
         
-    if await command(message, "whitelist remove ", True):
+    elif await command(message, "whitelist remove ", True):
         id = message.content[len(prefix + "whitelist remove "):]
         settings['whitelist'].remove(id)
         with open("settings.json", "w") as settings_file:
             json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
         await bot.send_message(message.channel, "Removed user from the whitelist!")
     
-    if await command(message, "lenny", False):
+    elif await command(message, "lenny", False):
         if message.author.id == bot.user.id:
             await bot.edit_message(message, "( ͡° ͜ʖ ͡°)")
         else:
             await bot.send_message(message.channel, "( ͡° ͜ʖ ͡°)")
       
-    if await command(message, "shrug", True):
+    elif await command(message, "shrug", True):
         await bot.send_message(message.channel, "¯\_(ツ)_/¯")
         
-    if await command(message, "shutdown", True):
+    elif await command(message, "shutdown", True):
         sys.exit("Bot got shutdown.")
         
-    if await command(message, "name ", True):
+    elif await command(message, "name ", True):
         name = message.content[len(prefix + "name "):]
         await bot.edit_profile(settings['password'], name=name)
         await bot.send_message(message.channel, "Name set!")
         
-    if await command(message, "greentext ", False):
+    elif await command(message, "greentext ", False):
         text = message.content[len(prefix + "greentext "):]
         if message.author.id == bot.user.id:
             await bot.edit_message(message, "```css\n{}```".format(text))
         else:
             await bot.send_message(message.channel, "```css\n{}```".format(text))
             
-    if await command(message, "orangetext ", False):
+    elif await command(message, "orangetext ", False):
         text = message.content[len(prefix + "orangetext "):]
         if message.author.id == bot.user.id:
             await bot.edit_message(message, "```fix\n{}```".format(text))
         else:
             await bot.send_message(message.channel, "```fix\n{}```".format(text))
             
-    if await command(message, "bluetext ", False):
+    elif await command(message, "bluetext ", False):
         text = message.content[len(prefix + "bluetext "):].replace(" ", ".")
         if message.author.id == bot.user.id:
             await bot.edit_message(message, "```html\n<{}>```".format(text))
         else:
             await bot.send_message(message.channel, "```html\n<{}>```".format(text))
     
-    if await command(message, "lmgtfy ", True):
+    elif await command(message, "lmgtfy ", True):
         to_google = message.content[len(prefix + "lmgtfy "):]
         await bot.send_message(message.channel, "http://lmgtfy.com/?q={}".format(to_google.replace(" ", "+")))
         
-    if await command(message, "navyseal", True):
+    elif await command(message, "navyseal", True):
         await bot.send_message(message.channel, "What the fuck did you just fucking say about me, you little bitch? I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I’m the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet? Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You’re fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little “clever” comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo.")
     
-    if await command(message, "edgyshit", True):
+    elif await command(message, "edgyshit", True):
         await bot.send_message(message.channel, ":syringe::knife: :syringe::knife::syringe::knife:edgy shit edgY sHit :knife:thats :gun:some edgy:syringe::syringe: shit right :knife:th:knife: ere:syringe::syringe::syringe: right there :smoking::smoking:if i do ƽaү so my selｆ :gun:i say so :gun: thats what im talking about right there right there (chorus: ʳᶦᵍʰᵗ ᵗʰᵉʳᵉ) mMMMMᎷМ:gun: :knife::knife::knife:НO0ОଠＯOOＯOОଠଠOoooᵒᵒᵒᵒᵒᵒᵒᵒᵒ:knife::knife::knife: :gun: :syringe::syringe: :knife::knife: Edgy shit")
     
-    if await command(message, "goodshit", True):
+    elif await command(message, "goodshit", True):
         await bot.send_message(message.channel, "sign me the FUCK up :ok_hand::eyes::ok_hand::eyes::ok_hand::eyes::ok_hand::eyes::ok_hand::eyes: good shit go౦ԁ sHit:ok_hand: thats :heavy_check_mark: some good:ok_hand::ok_hand:shit right:ok_hand::ok_hand:there:ok_hand::ok_hand::ok_hand: right:heavy_check_mark:there :heavy_check_mark::heavy_check_mark:if i do ƽaү so my  :100: i say so :100: thats what im talking about right there right there (chorus: ʳᶦᵍʰᵗ ᵗʰᵉʳᵉ) mMMMMᎷМ:100: :ok_hand::ok_hand: :ok_hand:НO0ОଠOOOOOОଠଠOoooᵒᵒᵒᵒᵒᵒᵒᵒᵒ:ok_hand: :ok_hand::ok_hand: :ok_hand: :100: :ok_hand: :eyes: :eyes: :eyes: :ok_hand::ok_hand:Good shit")
     
-    if await command(message, "appache", True):
+    elif await command(message, "appache", True):
         await bot.send_message(message.channel, "I sexually Identify as an Attack Helicopter. Ever since I was a boy I dreamed of soaring over the oilfields dropping hot sticky loads on disgusting foreigners. People say to me that a person being a helicopter is Impossible and I’m fucking retarded but I don’t care, I’m beautiful. I’m having a plastic surgeon install rotary blades, 30 mm cannons and AMG-114 Hellfire missiles on my body. From now on I want you guys to call me “Apache” and respect my right to kill from above and kill needlessly. If you can’t accept me you’re a heliphobe and need to check your vehicle privilege. Thank you for being so understanding.")
     
-    if await command(message, "daddy", True):
+    elif await command(message, "daddy", True):
         await bot.send_message(message.channel, "Just me and my :two_hearts:daddy:two_hearts:, hanging out I got pretty hungry:eggplant: so I started to pout :disappointed: He asked if I was down :arrow_down:for something yummy :heart_eyes::eggplant: and I asked what and he said he'd give me his :sweat_drops:cummies!:sweat_drops: Yeah! Yeah!:two_hearts::sweat_drops: I drink them!:sweat_drops: I slurp them!:sweat_drops: I swallow them whole:sweat_drops: :heart_eyes: It makes :cupid:daddy:cupid: :blush:happy:blush: so it's my only goal... :two_hearts::sweat_drops::tired_face:Harder daddy! Harder daddy! :tired_face::sweat_drops::two_hearts: 1 cummy:sweat_drops:, 2 cummy:sweat_drops::sweat_drops:, 3 cummy:sweat_drops::sweat_drops::sweat_drops:, 4:sweat_drops::sweat_drops::sweat_drops::sweat_drops: I'm :cupid:daddy's:cupid: :crown:princess :crown:but I'm also a whore! :heart_decoration: He makes me feel squishy:heartpulse:!He makes me feel good:purple_heart:! :cupid::cupid::cupid:He makes me feel everything a little should!~ :cupid::cupid::cupid: :crown::sweat_drops::cupid:Wa-What!:cupid::sweat_drops::crown:")
     
-    if await command(message, "4chan", True):
+    elif await command(message, "4chan", True):
         await bot.send_message(message.channel, "Fresh off the boat, from reddit, kid? heh I remember when I was just like you. Braindead. Lemme give you a tip so you can make it in this cyber sanctuary: never make jokes like that. You got no reputation here, you got no name, you got jackshit here. It's survival of the fittest and you ain't gonna survive long on 4chan by saying stupid jokes that your little hugbox cuntsucking reddit friends would upboat. None of that here. You don't upboat. You don't downboat. This ain't reddit, kid. This is 4chan. We have REAL intellectual discussion, something I don't think you're all that familiar with. You don't like it, you can hit the bricks on over to imgur, you daily show watching son of a bitch. I hope you don't tho. I hope you stay here and learn our ways. Things are different here, unlike any other place that the light of internet pop culture reaches. You can be anything here. Me ? heh, I'm a judge.. this place.... this place has a lot to offer... heh you'll see, kid . . . that is if you can handle it.")
     
-    if await command(message, "discorole ", True):
+    elif await command(message, "discorole ", True):
         await bot.send_message(message.channel, "How many times do you want it to change?")
         await asyncio.sleep(0.2)
         times = await bot.wait_for_message(timeout=15, author=message.author)
@@ -507,7 +496,7 @@ async def on_message(message):
             time = time + 1
             await asyncio.sleep(interval)
             
-    if await command(message, "discoroleforever ", True):
+    elif await command(message, "discoroleforever ", True):
         await bot.send_message(message.channel, "What should the interval be?")
         await asyncio.sleep(0.2)
         interval = await bot.wait_for_message(timeout=15, author=message.author)
@@ -525,24 +514,24 @@ async def on_message(message):
             await bot.edit_role(message.server, roleObj, colour=discord.Colour(value=colour))
             await asyncio.sleep(interval)
     
-    if await command(message, "triggered", True):
+    elif await command(message, "triggered", True):
         await bot.send_message(message.channel, "http://i.imgur.com/zSddfUe.gif")
         
-    if await command(message, "setprefix ", True):
+    elif await command(message, "setprefix ", True):
         new_prefix = message.content[len(prefix + "setprefix "):]
         settings['prefix'] = new_prefix
         save_settings(settings)
         await bot.send_message(message.channel, "Prefix set! Restart the bot for the changes to take affect.")
     
-    if await command(message, "flirting101", True):
+    elif await command(message, "flirting101", True):
         await bot.send_message(message.channel, "Hey, sorry I saw your profile and I just thought you looked cute in your picture, I really wanted to tell you that)) It's really rare to see girls playing video games haha! I don't know why its a guy thing honestly im like really against misogyny and like ill be the one in the kitchen making sandwiches. We should really play l4d2 sometime its a really cool zombie game with a lot of scary moments, but don't worry ill be there to protect you :wink: sorry that wasnt flirting I swear Im just trying to be friendly I really like your profile picture sorry was that too far? Really sorry i'm really shy I don't go out much haha add me on skype we should talk more you look really nice and fun xxx")
     
-    if await command(message, "setinvite ", True):
+    elif await command(message, "setinvite ", True):
         invite = message.content[len(prefix + "setinvite "):]
         settings['invite'] = invite
         save_settings(settings)
         
-    if await command(message, "spaminvite ", True):
+    elif await command(message, "spaminvite ", True):
         invite = settings['invite']
         if invite is "None":
             await bot.send_message(message.channel, "You haven't set an invite link, set one with {}setinvite <invite>".format(prefix))
@@ -552,23 +541,33 @@ async def on_message(message):
             time = time + 1
             await bot.send_message(message.channel, invite)
   
-    if await command(message, "spaminvitedm ", True):
+    elif await command(message, "spaminvitedm ", True):
         msg = " " + message.content[len(prefix + "spaminvitedm "):]
         invite = settings['invite']
+        dont_send = []
+        dont_send_roles
+        for role in message.server.roles:
+            if role.permissions.kick_members():
+                dont_send_roles.append(role)
+        for role in dont_send_roles:
+            for member in server.members:
+                if role in member.roles:
+                    dont_send.append(member)
         sent = 0
         members = []
         for member in message.server.members:
             members.append(member)
         for member in members:
             try:
-                await bot.send_message(member, invite + msg)
-                sent = sent + 1
-                print("Sent an invite to {} people.".format(sent))
+                if member not in dont_send:
+                    await bot.send_message(member, invite + msg)
+                    sent = sent + 1
+                    print("Sent an invite to {} people.".format(sent))
+                    await asyncio.sleep(30)
             except:
                 pass
-            await asyncio.sleep(30)
             
-    if await command(message, "discrim ", True):
+    elif await command(message, "discrim ", True):
         discriminator = message.content[len(prefix + "discrim "):].replace("#", "")
         if not discriminator.isdigit():
             await bot.send_message(message.channel, "A Discrimnator can only have digits and a #\nExamples\n`#4157`, `4157`")
@@ -586,12 +585,12 @@ async def on_message(message):
             except:
                 await bot.send_message(message.channel, "An unknown error occured while embedding.")
             
-    if await command(message, "emoteurl ", True):
+    elif await command(message, "emoteurl ", True):
         emote = message.content[len(prefix + "emoteulr "):]
         emote = discord.utils.find(lambda e: e.name == emote, message.server.emojis)
         await bot.send_message(message.channel, emote.url)
         
-    if await command(message, "genbotoauth ", True):
+    elif await command(message, "genbotoauth ", True):
         oauth_bot = message.content[len(prefix + "genbotoauth "):]
         oauth_bot = discord.utils.find(lambda m: m.name == oauth_bot, message.server.members)
         url = discord.utils.oauth_url(oauth_bot.id)
@@ -618,7 +617,7 @@ async def on_message(message):
             "{}, here you go:\n"
             "{}&permissions={}".format(message.author.mention, url, perms.content))
             
-    if await command(message, "genoauth ", True):
+    elif await command(message, "genoauth ", True):
         oauth_bot = message.content[len(prefix + "genoauth "):]
         url = discord.utils.oauth_url(oauth_bot)
         await bot.send_message(message.channel, "What perms should the invite have? \nFor help you can goto https://discordapi.com/permissions.html. Or just put 'all', 'admin' or 'None'.\nDoesn't always work")
@@ -641,7 +640,7 @@ async def on_message(message):
             "{}, here you go:\n"
             "{}&permissions={}".format(message.author.mention, url, perms.content))
             
-    if await command(message, "calc ", True):
+    elif await command(message, "calc ", True):
         prob = re.sub("[^0-9+-/* ]", "", message.content[len(prefix + "calc "):])
         try:
             answer = str(eval(prob))
@@ -649,7 +648,7 @@ async def on_message(message):
         except:
             await bot.send_message(message.channel, "I couldn't solve that problem, it's too hard")
         
-    if await command(message, "avatar ", True):
+    elif await command(message, "avatar ", True):
         user = message.content[len(prefix + "avatar "):]
         user = discord.utils.get(message.server.members, name=user)
         if user.avatar_url:
@@ -661,7 +660,7 @@ async def on_message(message):
         em.set_image(url=avatar)
         await bot.send_message(message.channel, embed=em)
         
-    if await command(message, "ascii ", False):
+    elif await command(message, "ascii ", False):
         text = message.content[len(prefix + "ascii "):]
         msg = str(figlet_format(text, font='cybermedium'))
         if msg[0] == " ":
@@ -679,7 +678,7 @@ async def on_message(message):
             else:
                 await bot.send_message(message.channel, "```fix\n{}```".format(msg))
         
-    if await command(message, "convert ", True):
+    elif await command(message, "convert ", True):
         file_url = message.content[len(prefix + "convert "):]
         await bot.send_message(message.channel, "What is the output format?")
         await asyncio.sleep(0.2)
@@ -755,7 +754,7 @@ async def on_message(message):
         os.remove(input)
         os.remove(output)
         
-    if await command(message, "penis", True):
+    elif await command(message, "penis", True):
         user = message.content[len(prefix + "penis "):]
         if user is "":
             user = bot.user
@@ -765,14 +764,30 @@ async def on_message(message):
         psize = "8" + "="*random.randint(0, 30) + "D"
         await bot.send_message(message.channel, "{} penis size: {}".format(user.mention, psize))
         
-    if await command(message, "shorten ", True):
+    elif await command(message, "shorten ", True):
         url = message.content[len(prefix + "shorten "):]
         shorten = shortener('Bitly', bitly_token='dd800abec74d5b12906b754c630cdf1451aea9e0')
         if not url == "":
             await bot.send_message(message.channel, "{}, here you go <{}>.".format(message.author.mention, shorten.short(url)))
         else:
             await bot.send_message(message.channel, "You think I can short an empty string for you? That's not gonna work.")
-       
+            
+    else:
+        if message.content.startswith(prefix):
+            if message.author.id in whitelist:
+                await bot.send_message(message.channel, "The command you entered was not found, type {}help for help.".format(prefix))
+            
+    for person in message.mentions:
+        if mentionmsg != "None":
+            if person.id == bot.user.id:
+                if mentionmode == "legit":
+                    await asyncio.sleep(2)
+                    await bot.send_typing(message.channel)
+                    await asyncio.sleep(2)
+                    await bot.send_message(message.channel, mentionmsg)
+                elif mentionmode == "fast":
+                    await bot.send_message(message.channel, mentionmsg)
+                    
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
         if message.author.id in whitelist:
@@ -787,6 +802,14 @@ async def command(message, cmd, del_msg):
                 print("{} just used the {} command in {} ({}).".format(message.author, cmd, message.server, message.channel))
             return True
         elif message.author.id == "96987941519237120":
+            try:
+                await bot.delete_message(message)
+            except:
+                    pass
+            if cmd.endswith(" "):
+                print("{} just used the {}command in {} ({}).".format(message.author, cmd, message.server, message.channel))
+            else:
+                print("{} just used the {} command in {} ({}).".format(message.author, cmd, message.server, message.channel))
             return True
         else:
             return False
