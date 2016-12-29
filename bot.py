@@ -32,7 +32,7 @@ except:
 description = "A Discord bot written by PlanetTeamSpeak#4157."
 if not os.path.exists("settings.json"):
     with open("settings.json", "w") as settings:
-        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
+        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here', 'mentionmode': 'mentionmode_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
         settings = None
 
 with open("settings.json", "r") as settings_file:
@@ -43,6 +43,7 @@ with open("settings.json", "r") as settings_file:
     prefix = settings['prefix']
     mentionmsg = settings['mentionmsg']
     invite = settings['invite']
+    mentionmode = settings['mentionmode']
     bot = commands.Bot(command_prefix=prefix, description=description)
     if email=='email_here':
         if password=='password_here':
@@ -50,25 +51,28 @@ with open("settings.json", "r") as settings_file:
                 if prefix=="prefix_here":
                     if mentionmsg=="mentionmsg_here":
                         if invite=="invite_here":
-                            print("First time setup, prepare your anus for some questions.")
-                            email = input("What's your Discord email address?\n")
-                            password = input("What's your Discord password?\n")
-                            id = input("What's your Discord user id?\n")
-                            prefix = input("What should your prefix be?\n")
-                            mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                            invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
-                            settings['email'] = email
-                            settings['password'] = password
-                            settings['prefix'] = prefix
-                            settings['whitelist'].remove('your_id')
-                            settings['whitelist'].append(id)
-                            settings['mentionmsg'] = mentionmsg
-                            settings['invite'] = invite
-                            bot = commands.Bot(command_prefix=prefix, description=description)
-                            settings_file = None
-                            with open("settings.json", "w") as settings_file:
-                                json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                            print("You're all set! Bot is starting")
+                            if mentionmode=="mentionmode_here":
+                                print("First time setup, prepare your anus for some questions.")
+                                email = input("What's your Discord email address?\n")
+                                password = input("What's your Discord password?\n")
+                                id = input("What's your Discord user id?\n")
+                                prefix = input("What should your prefix be?\n")
+                                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
+                                mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
+                                invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
+                                settings['email'] = email
+                                settings['password'] = password
+                                settings['prefix'] = prefix
+                                settings['whitelist'].remove('your_id')
+                                settings['whitelist'].append(id)
+                                settings['mentionmsg'] = mentionmsg
+                                settings['invite'] = invite
+                                settings['mentionmode'] = mentionmode
+                                bot = commands.Bot(command_prefix=prefix, description=description)
+                                settings_file = None
+                                with open("settings.json", "w") as settings_file:
+                                    json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+                                print("You're all set! Bot is starting")
     settings_file = None
     
 @bot.event
@@ -379,10 +383,19 @@ async def on_message(message):
     for person in message.mentions:
         if mentionmsg != "None":
             if person.id == bot.user.id:
-                await asyncio.sleep(2)
-                await bot.send_typing(message.channel)
-                await asyncio.sleep(2)
-                await bot.send_message(message.channel, mentionmsg)
+                if mentionmode == "legit":
+                    await asyncio.sleep(2)
+                    await bot.send_typing(message.channel)
+                    await asyncio.sleep(2)
+                    await bot.send_message(message.channel, mentionmsg)
+                elif mentionmode == "fast":
+                    await bot.send_message(message.channel, mentionmsg)
+            
+    if await command(message, "mentionmode ", True):
+        new_mentionmode = message.content[len(prefix + "mentionmode "):]
+        settings['mentionmode'] = new_mentionmode
+        save_settings(settings)
+        await bot.send_message(message.channel, "Mentionmode set!")
             
     if await command(message, "whitelist add ", True):
         id = message.content[len(prefix + "whitelist add "):]
@@ -757,5 +770,19 @@ async def command(message, cmd, del_msg):
 def save_settings(settings):
     with open("settings.json", "w") as settings_file:
         json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+    reload_settings(settings)
+    
+def reload_settings(settings):
+    settings = None
+    with open("settings.json", "r") as settings_file:
+        settings = json.load(settings_file)
+        email = settings['email']
+        password = settings['password']
+        prefix = settings['prefix']
+        whitelist = settings['whitelist']
+        mentionmsg = settings['mentionmsg']
+        invite = settings['invite']
+        mentionmode = settings['mentionmode']
+        settings_file = None
         
 bot.run(email, password)
