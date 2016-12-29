@@ -649,7 +649,7 @@ async def on_message(message):
         em.set_image(url=avatar)
         await bot.send_message(message.channel, embed=em)
         
-    if await command(message, "ascii ", True):
+    if await command(message, "ascii ", False):
         text = message.content[len(prefix + "ascii "):]
         msg = str(figlet_format(text, font='cybermedium'))
         if msg[0] == " ":
@@ -657,9 +657,15 @@ async def on_message(message):
         error = figlet_format('LOL, that\'s a bit too long.',
                               font='cybermedium')
         if len(msg) > 2000:
-            await bot.send_message(message.channel, box(error))
+            if message.author.id == bot.user.id:
+                await bot.edit_message(message, "```{}```".format(error))
+            else:
+                await bot.send_message(message.channel, box(error))
         else:
-            await bot.send_message(message.channel, "```fix\n{}```".format(msg))
+            if message.author.id == bot.user.id:
+                await bot.edit_message(message, "```fix\n{}```".format(msg))
+            else:
+                await bot.send_message(message.channel, "```fix\n{}```".format(msg))
         
     if await command(message, "convert ", True):
         file_url = message.content[len(prefix + "convert "):]
