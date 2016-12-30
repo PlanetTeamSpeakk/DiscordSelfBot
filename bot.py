@@ -67,7 +67,6 @@ with open("settings.json", "r") as settings_file:
                                 print("First time setup, prepare your anus for some questions.")
                                 email = input("What's your Discord email address?\n")
                                 password = input("What's your Discord password?\n")
-                                id = input("What's your Discord user id?\n")
                                 prefix = input("What should your prefix be?\n")
                                 mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
                                 mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
@@ -75,8 +74,6 @@ with open("settings.json", "r") as settings_file:
                                 settings['email'] = email
                                 settings['password'] = password
                                 settings['prefix'] = prefix
-                                settings['whitelist'].remove('your_id')
-                                settings['whitelist'].append(id)
                                 settings['mentionmsg'] = mentionmsg
                                 settings['invite'] = invite
                                 settings['mentionmode'] = mentionmode
@@ -90,7 +87,12 @@ with open("settings.json", "r") as settings_file:
 @bot.event
 async def on_ready():
     print("\nSTARTED\n")
-
+    if "your_id" in whitelist:
+        id = bot.user.id
+        settings['whitelist'].remove("your_id")
+        settings['whitelist'].append(id)
+        save_settings()
+        
 @bot.event
 async def on_message(message):
     if await command(message, "help", True):
@@ -389,13 +391,13 @@ async def on_message(message):
     elif await command(message, "mentionset ", True):
         new_mentionmsg = message.content[len(prefix + "mentionset "):]
         settings['mentionmsg'] = new_mentionmsg
-        save_settings(settings)
+        save_settings()
         await bot.send_message(message.channel, "Mention message set!")
             
     elif await command(message, "mentionmode ", True):
         new_mentionmode = message.content[len(prefix + "mentionmode "):]
         settings['mentionmode'] = new_mentionmode
-        save_settings(settings)
+        save_settings()
         await bot.send_message(message.channel, "Mentionmode set!")
             
     elif await command(message, "whitelist add ", True):
@@ -520,7 +522,7 @@ async def on_message(message):
     elif await command(message, "setprefix ", True):
         new_prefix = message.content[len(prefix + "setprefix "):]
         settings['prefix'] = new_prefix
-        save_settings(settings)
+        save_settings()
         await bot.send_message(message.channel, "Prefix set! Restart the bot for the changes to take affect.")
     
     elif await command(message, "flirting101", True):
@@ -529,7 +531,7 @@ async def on_message(message):
     elif await command(message, "setinvite ", True):
         invite = message.content[len(prefix + "setinvite "):]
         settings['invite'] = invite
-        save_settings(settings)
+        save_settings()
         
     elif await command(message, "spaminvite ", True):
         invite = settings['invite']
@@ -813,7 +815,7 @@ async def command(message, cmd, del_msg):
     else:
         return False
         
-def save_settings(settings):
+def save_settings():
     with open("settings.json", "w") as settings_file:
         json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
     reload_settings(settings)
