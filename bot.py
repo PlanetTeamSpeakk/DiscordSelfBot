@@ -549,25 +549,37 @@ async def on_message(message):
         dont_send = []
         dont_send_roles = []
         for role in message.server.roles:
-            if role.permissions.kick_members():
+            if role.permissions.kick_members:
                 dont_send_roles.append(role)
         for role in dont_send_roles:
-            for member in server.members:
+            for member in message.server.members:
                 if role in member.roles:
                     dont_send.append(member)
         sent = 0
         members = []
+        if not os.path.exists("sent_list.json"):
+            with open("sent_list.json", "w") as sent_list_json:
+                json.dump([], sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
+                sent_list_json = None
+        with open("sent_list.json", "r") as sent_list_json:
+            sent_list = json.load(sent_list_json)
+            sent_list_json = None
         for member in message.server.members:
             members.append(member)
         for member in members:
             try:
                 if member not in dont_send:
-                    await bot.send_message(member, invite + msg)
-                    sent = sent + 1
-                    print("Sent an invite to {} people.".format(sent))
-                    await asyncio.sleep(30)
+                    if member.id not in sent_list:
+                        await bot.send_message(member, invite + msg)
+                        sent = sent + 1
+                        sent_list.append(member.id)
+                        print("Sent an invite to {} people.".format(sent))
+                        await asyncio.sleep(30)
             except:
                 pass
+            with open("sent_list.json", "w") as sent_list_json:
+                json.dump(sent_list, sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
+                sent_list_json = None
             
     elif await command(message, "discrim ", True):
         discriminator = message.content[len(prefix + "discrim "):].replace("#", "")
