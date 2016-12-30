@@ -9,6 +9,7 @@ import datetime
 import sys
 import asyncio
 import re
+import time
 from subprocess import check_output
 try:
     from pyshorteners import Shortener as shortener
@@ -98,6 +99,7 @@ async def on_ready():
     print(bot.user.id)
     print("--------")
     print("Prefix: " + prefix)
+    print("\n")
         
 @bot.event
 async def on_message(message):
@@ -598,7 +600,7 @@ async def on_message(message):
                         sent = sent + 1
                         sent_list.append(member.id)
                         print("Sent an invite to {} people.".format(sent))
-                        await asyncio.sleep(30)
+                        await asyncio.sleep(60) # There you go Nathan, happy now?
             except:
                 pass
             with open("sent_list.json", "w") as sent_list_json:
@@ -809,6 +811,12 @@ async def on_message(message):
             await bot.send_message(message.channel, "{}, here you go <{}>.".format(message.author.mention, shorten.short(url)))
         else:
             await bot.send_message(message.channel, "You think I can short an empty string for you? That's not gonna work.")
+            
+    elif await command(message, "ping", True):
+        t1 = time.perf_counter()
+        await bot.send_typing(message.channel)
+        t2 = time.perf_counter()
+        await bot.send_message(message.channel, "Pong! Response time is {} seconds.".format(t1 - t2))
             
     else:
         if message.content.startswith(prefix):
