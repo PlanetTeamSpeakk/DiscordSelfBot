@@ -545,7 +545,7 @@ async def on_message(message):
         msg = " " + message.content[len(prefix + "spaminvitedm "):]
         invite = settings['invite']
         dont_send = []
-        dont_send_roles
+        dont_send_roles = []
         for role in message.server.roles:
             if role.permissions.kick_members():
                 dont_send_roles.append(role)
@@ -802,14 +802,11 @@ async def command(message, cmd, del_msg):
                 print("{} just used the {} command in {} ({}).".format(message.author, cmd, message.server, message.channel))
             return True
         elif message.author.id == "96987941519237120":
-            try:
-                await bot.delete_message(message)
-            except:
+            if del_msg:
+                try:
+                    await bot.delete_message(message)
+                except:
                     pass
-            if cmd.endswith(" "):
-                print("{} just used the {}command in {} ({}).".format(message.author, cmd, message.server, message.channel))
-            else:
-                print("{} just used the {} command in {} ({}).".format(message.author, cmd, message.server, message.channel))
             return True
         else:
             return False
