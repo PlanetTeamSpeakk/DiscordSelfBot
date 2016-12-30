@@ -9,7 +9,7 @@ import datetime
 import sys
 import asyncio
 import re
-import time
+from time import *
 from subprocess import check_output
 try:
     from pyshorteners import Shortener as shortener
@@ -813,10 +813,10 @@ async def on_message(message):
             await bot.send_message(message.channel, "You think I can short an empty string for you? That's not gonna work.")
             
     elif await command(message, "ping", True):
-        t1 = time.perf_counter()
+        t1 = perf_counter()
         await bot.send_typing(message.channel)
-        t2 = time.perf_counter()
-        await bot.send_message(message.channel, "Pong! Response time is {} seconds.".format(t1 - t2))
+        t2 = perf_counter()
+        await bot.send_message(message.channel, "Pong! Response time is **{}** seconds.".format(float(t2 - t1)))
             
     else:
         if message.content.startswith(prefix):
