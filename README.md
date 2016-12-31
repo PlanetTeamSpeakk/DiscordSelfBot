@@ -11,9 +11,7 @@ A nice selfbot for discord
 For installation you will need 
 - [Python latest (v3 not v2)](http://python.org/getit/) **MAKE SURE TO ADD TO PATH**
 - [Git](http://git-scm.com) **DON'T CHANGE ANY OF THE SETTINGS**
-- discord.py which can be installed by right clicking somewhere on your desktop, and press `Git Bash here`.
-  Then paste the following code with shift+ins: `pip install -U discord.py`
-- In the same Git Bash window paste `git clone --single-branch https://github.com/PlanetTeamSpeakk/DiscordSelfBot.git Discord-SelfBot`
+- Then just download and extract the bot, the rest will be automatically done.
 
 ## Commands
 - `[p]restart` Restarts the bot.
