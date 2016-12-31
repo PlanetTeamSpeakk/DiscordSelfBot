@@ -1,4 +1,3 @@
-import discord
 from discord.ext import commands
 import logging
 import aiohttp
@@ -11,6 +10,16 @@ import asyncio
 import re
 from time import *
 from subprocess import check_output
+try:
+	import discord
+except:
+    print("You don't have discord.py installed, installing it now...")
+    try:
+        check_output("pip3 install discord.py", shell=True)
+        import discord
+        print("Discord.py succesfully installed.")
+    except:
+        sys.exit("Discord.py didn't succesfully install, exiting...")
 try:
     from pyshorteners import Shortener as shortener
 except:
@@ -58,32 +67,31 @@ with open("settings.json", "r") as settings_file:
     invite = settings['invite']
     mentionmode = settings['mentionmode']
     bot = commands.Bot(command_prefix=prefix, description=description)
+	settings_file = None
     if email=='email_here':
         if password=='password_here':
-            if 'your_id' in whitelist:
-                if prefix=="prefix_here":
-                    if mentionmsg=="mentionmsg_here":
-                        if invite=="invite_here":
-                            if mentionmode=="mentionmode_here":
-                                print("First time setup, prepare your anus for some questions.")
-                                email = input("What's your Discord email address?\n")
-                                password = input("What's your Discord password?\n")
-                                prefix = input("What should your prefix be?\n")
-                                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                                mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
-                                invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
-                                settings['email'] = email
-                                settings['password'] = password
-                                settings['prefix'] = prefix
-                                settings['mentionmsg'] = mentionmsg
-                                settings['invite'] = invite
-                                settings['mentionmode'] = mentionmode
-                                bot = commands.Bot(command_prefix=prefix, description=description)
-                                settings_file = None
-                                with open("settings.json", "w") as settings_file:
-                                    json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                                print("You're all set! Bot is starting")
-    settings_file = None
+            if prefix=="prefix_here":
+                if mentionmsg=="mentionmsg_here":
+                    if invite=="invite_here":
+                        if mentionmode=="mentionmode_here":
+                            print("First time setup, prepare your anus for some questions.")
+                            email = input("What's your Discord email address?\n")
+                            password = input("What's your Discord password?\n")
+                            prefix = input("What should your prefix be?\n")
+                            mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
+                            mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
+                            invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
+                            settings['email'] = email
+                            settings['password'] = password
+                            settings['prefix'] = prefix
+                            settings['mentionmsg'] = mentionmsg
+                            settings['invite'] = invite
+                            settings['mentionmode'] = mentionmode
+                            bot = commands.Bot(command_prefix=prefix, description=description)
+                            settings_file = None
+                            with open("settings.json", "w") as settings_file:
+                                json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+                            print("You're all set! Bot is starting")
     
 @bot.event
 async def on_ready():
@@ -797,7 +805,7 @@ async def on_message(message):
     elif await command(message, "penis", True):
         user = message.content[len(prefix + "penis "):]
         if user is "":
-            user = bot.user
+            user = message.author
         else:
             user = discord.utils.get(message.server.members, name=user)
         random.seed(user.id)
@@ -816,7 +824,7 @@ async def on_message(message):
         t1 = perf_counter()
         await bot.send_typing(message.channel)
         t2 = perf_counter()
-        await bot.send_message(message.channel, "Pong! Response time is **{}** seconds.".format(float(t2 - t1)))
+        await bot.send_message(message.channel, "Pong! Response time was **{}** seconds.".format(float(t2 - t1)))
             
     else:
         if message.content.startswith(prefix):
