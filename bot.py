@@ -67,7 +67,7 @@ with open("settings.json", "r") as settings_file:
     invite = settings['invite']
     mentionmode = settings['mentionmode']
     bot = commands.Bot(command_prefix=prefix, description=description)
-	settings_file = None
+    settings_file = None
     if email=='email_here':
         if password=='password_here':
             if prefix=="prefix_here":
