@@ -860,15 +860,16 @@ async def on_message(message):
                 await say(msgchan, "The command you entered was not found, type {}help for help.".format(prefix))
             
     for person in message.mentions:
-        if mentionmsg != "None":
-            if person.id == bot.user.id:
-                if mentionmode == "legit":
-                    await asyncio.sleep(2)
-                    await bot.send_typing(message.channel)
-                    await asyncio.sleep(2)
-                    await say(msgchan, mentionmsg)
-                elif mentionmode == "fast":
-                    await say(msgchan, mentionmsg)
+        if message.author.id != bot.user.id:
+            if mentionmsg != "None":
+                if person.id == bot.user.id:
+                    if mentionmode == "legit":
+                        await asyncio.sleep(2)
+                        await bot.send_typing(message.channel)
+                        await asyncio.sleep(2)
+                        await say(msgchan, mentionmsg)
+                    elif mentionmode == "fast":
+                        await say(msgchan, mentionmsg)
                     
 async def command(message, cmd, del_msg):
     if message.content.startswith(prefix + cmd):
