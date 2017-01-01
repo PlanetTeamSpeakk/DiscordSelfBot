@@ -68,30 +68,28 @@ with open("settings.json", "r") as settings_file:
     mentionmode = settings['mentionmode']
     bot = commands.Bot(command_prefix=prefix, description=description)
     settings_file = None
-    if email=='email_here':
-        if password=='password_here':
-            if prefix=="prefix_here":
-                if mentionmsg=="mentionmsg_here":
-                    if invite=="invite_here":
-                        if mentionmode=="mentionmode_here":
-                            print("First time setup, prepare your anus for some questions.")
-                            email = input("What's your Discord email address?\n")
-                            password = input("What's your Discord password?\n")
-                            prefix = input("What should your prefix be?\n")
-                            mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                            mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
-                            invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
-                            settings['email'] = email
-                            settings['password'] = password
-                            settings['prefix'] = prefix
-                            settings['mentionmsg'] = mentionmsg
-                            settings['invite'] = invite
-                            settings['mentionmode'] = mentionmode
-                            bot = commands.Bot(command_prefix=prefix, description=description)
-                            settings_file = None
-                            with open("settings.json", "w") as settings_file:
-                                json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                            print("You're all set! Bot is starting")
+    for key in settings:
+        if "_here" in key:
+            if not asked:
+                asked = True
+                print("First time setup, prepare your anus for some questions.")
+                email = input("What's your Discord email address?\n")
+                password = input("What's your Discord password?\n")
+                prefix = input("What should your prefix be?\n")
+                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
+                mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
+                invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
+                settings['email'] = email
+                settings['password'] = password
+                settings['prefix'] = prefix
+                settings['mentionmsg'] = mentionmsg
+                settings['invite'] = invite
+                settings['mentionmode'] = mentionmode
+                bot = commands.Bot(command_prefix=prefix, description=description)
+                settings_file = None
+                with open("settings.json", "w") as settings_file:
+                    json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+                print("You're all set! Bot is starting")
     
 @bot.event
 async def on_ready():
@@ -101,13 +99,15 @@ async def on_ready():
         settings['whitelist'].remove("your_id")
         settings['whitelist'].append(id)
         save_settings()
+    if not os.path.exists("folders"):
+        os.makedirs("folders")
     print("--------")
     print("Logged in as:")
     print(bot.user.name)
     print(bot.user.id)
     print("--------")
     print("Prefix: " + prefix)
-    print("\n")
+    print()
         
 @bot.event
 async def on_message(message):
@@ -396,11 +396,11 @@ async def on_message(message):
                 pass
         else:
             pass
-        if not os.path.exists("downloads"):
-            os.makedirs("downloads")
+        if not os.path.exists("folders/downloads"):
+            os.makedirs("folders/downloads")
         async with aiohttp.get(url) as r:
             file = await r.content.read()
-        fileloc = "downloads/download{}.{}".format(random.randint(1000, 9999), suffix.content.lower())
+        fileloc = "folders/downloads/download{}.{}".format(random.randint(1000, 9999), suffix.content.lower())
         with open(fileloc, 'wb') as f:
             f.write(file)
         await bot.edit_message(downloadmsg, "File downloaded, look in the root folder.")
@@ -768,10 +768,10 @@ async def on_message(message):
                 await bot.edit_message(convertmsg, "Your link is corrupt, it should end with something like .mp3, .mp4, .png, etc.")
                 print(form_found)
                 return
-        if not os.path.exists("converter"):
-            os.makedirs("converter")
-        input = "converter/{}.{}".format(number, input_format)
-        output = "converter/{}.{}".format(number, output_format.content)
+        if not os.path.exists("folders/converter"):
+            os.makedirs("folders/converter")
+        input = "folders/converter/{}.{}".format(number, input_format)
+        output = "folders/converter/{}.{}".format(number, output_format.content)
         outputname = "{}.{}".format(number, output_format.content)
         await bot.edit_message(convertmsg, "Downloading...")
         try:
@@ -835,18 +835,18 @@ async def on_message(message):
         else:
             shorten = shortener('Bitly', bitly_token='dd800abec74d5b12906b754c630cdf1451aea9e0')
             short_link = shorten.short(link)
-        if not os.path.exists("qrcodes"):
-            os.makedirs("qrcodes")
+        if not os.path.exists("folders/qrcodes"):
+            os.makedirs("folders/qrcodes")
         async with aiohttp.get(shorten.qrcode(width=128, height=128)) as r:
             file = await r.content.read()
         number = random.randint(1000, 9999)
-        fileloc = "qrcodes/qrcode{}.png".format(number)
+        fileloc = "folders/qrcodes/qrcode{}.png".format(number)
         with open(fileloc, 'wb') as f:
             f.write(file)
             file = None
             f = None
-        await bot.send_file(msgchan, fp="qrcodes/qrcode{}.png".format(number), filename="qrcode{}.png".format(number))
-        os.remove("qrcodes/qrcode{}.png".format(number))
+        await bot.send_file(msgchan, fp="folders/qrcodes/qrcode{}.png".format(number), filename="qrcode{}.png".format(number))
+        os.remove("folders/qrcodes/qrcode{}.png".format(number))
             
     else:
         if message.content.startswith(prefix):
@@ -892,9 +892,9 @@ async def command(message, cmd, del_msg):
 def save_settings():
     with open("settings.json", "w") as settings_file:
         json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-    reload_settings(settings)
+    reload_settings()
     
-def reload_settings(settings):
+def reload_settings():
     settings = None
     with open("settings.json", "r") as settings_file:
         settings = json.load(settings_file)
