@@ -8,6 +8,7 @@ import datetime
 import sys
 import asyncio
 import re
+import datetime
 from time import *
 from subprocess import check_output
 try:
@@ -50,7 +51,8 @@ except:
         print("FFMpy succesfully installed.")
     except:
         sys.exit("FFMpy could not be installed, exiting...")
-    
+
+started = datetime.datetime.now()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
 if not os.path.exists("settings.json"):
     with open("settings.json", "w") as settings:
@@ -93,7 +95,8 @@ with open("settings.json", "r") as settings_file:
     
 @bot.event
 async def on_ready():
-    print("\nSTARTED\n")
+    print("\nStarted at {}".format(started.strftime("%d %b %Y %H:%M")))
+    print("DiscordSelfBot written by PlanetTeamSpeak#4157.\n")
     if "your_id" in whitelist:
         id = bot.user.id
         settings['whitelist'].remove("your_id")
@@ -847,6 +850,9 @@ async def on_message(message):
             f = None
         await bot.send_file(msgchan, fp="folders/qrcodes/qrcode{}.png".format(number), filename="qrcode{}.png".format(number))
         os.remove("folders/qrcodes/qrcode{}.png".format(number))
+            
+    elif await command(message, "uptime", True):
+        await say(msgchan, "The bot has been on for **{}**.".format(datetime.datetime.now() - started))
             
     else:
         if message.content.startswith(prefix):
