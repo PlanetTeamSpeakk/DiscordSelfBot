@@ -106,8 +106,8 @@ async def on_ready():
         settings['whitelist'].remove("your_id")
         settings['whitelist'].append(id)
         save_settings()
-    if not os.path.exists("folders"):
-        os.makedirs("folders")
+    if not os.path.exists("data"):
+        os.makedirs("data")
     print("--------")
     print("Logged in as:")
     print(bot.user.name)
@@ -403,11 +403,11 @@ async def on_message(message):
                 pass
         else:
             pass
-        if not os.path.exists("folders/downloads"):
-            os.makedirs("folders/downloads")
+        if not os.path.exists("data/downloads"):
+            os.makedirs("data/downloads")
         async with aiohttp.get(url) as r:
             file = await r.content.read()
-        fileloc = "folders/downloads/download{}.{}".format(random.randint(1000, 9999), suffix.content.lower())
+        fileloc = "data/downloads/download{}.{}".format(random.randint(1000, 9999), suffix.content.lower())
         with open(fileloc, 'wb') as f:
             f.write(file)
         await bot.edit_message(downloadmsg, "File downloaded, look in the root folder.")
@@ -737,10 +737,10 @@ async def on_message(message):
                 await bot.edit_message(convertmsg, "Your link is corrupt, it should end with something like .mp3, .mp4, .png, etc.")
                 print(form_found)
                 return
-        if not os.path.exists("folders/converter"):
-            os.makedirs("folders/converter")
-        input = "folders/converter/{}.{}".format(number, input_format)
-        output = "folders/converter/{}.{}".format(number, output_format.content)
+        if not os.path.exists("data/converter"):
+            os.makedirs("data/converter")
+        input = "data/converter/{}.{}".format(number, input_format)
+        output = "data/converter/{}.{}".format(number, output_format.content)
         outputname = "{}.{}".format(number, output_format.content)
         await bot.edit_message(convertmsg, "Downloading...")
         try:
@@ -804,18 +804,18 @@ async def on_message(message):
         else:
             shorten = shortener('Bitly', bitly_token='dd800abec74d5b12906b754c630cdf1451aea9e0')
             short_link = shorten.short(link)
-        if not os.path.exists("folders/qrcodes"):
-            os.makedirs("folders/qrcodes")
+        if not os.path.exists("data/qrcodes"):
+            os.makedirs("data/qrcodes")
         async with aiohttp.get(shorten.qrcode(width=128, height=128)) as r:
             file = await r.content.read()
         number = random.randint(1000, 9999)
-        fileloc = "folders/qrcodes/qrcode{}.png".format(number)
+        fileloc = "data/qrcodes/qrcode{}.png".format(number)
         with open(fileloc, 'wb') as f:
             f.write(file)
             file = None
             f = None
-        await bot.send_file(msgchan, fp="folders/qrcodes/qrcode{}.png".format(number), filename="qrcode{}.png".format(number))
-        os.remove("folders/qrcodes/qrcode{}.png".format(number))
+        await bot.send_file(msgchan, fp="data/qrcodes/qrcode{}.png".format(number), filename="qrcode{}.png".format(number))
+        os.remove("data/qrcodes/qrcode{}.png".format(number))
             
     elif await command(message, "uptime", True):
         await say(msgchan, "The bot has been on for **{}**.".format(datetime.datetime.now() - started))
