@@ -51,18 +51,6 @@ except:
         print("FFMpy succesfully installed.")
     except:
         sys.exit("FFMpy didn't succesfully install, exiting...")
-try:
-    from cleverbot import Cleverbot as clv
-    clv.API_URL = "http://www.cleverbot.com/webservicemin?uc=321&"
-except:
-    print("You don't have cleverbot installed, installing it now...")
-    try:
-        check_output("pip3 install cleverbot", shell=True)
-        from cleverbot import Cleverbot as clv
-        clv.API_URL = "http://www.cleverbot.com/webservicemin?uc=321&"
-        print("Cleverbot succesfully installed.")
-    except:
-        sys.exit("Cleverbot didn't succesfully install, exiting...")
 
 started = datetime.datetime.now()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
