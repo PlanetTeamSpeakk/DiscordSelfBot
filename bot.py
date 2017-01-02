@@ -1,4 +1,3 @@
-from discord.ext import commands
 import logging
 import aiohttp
 import random
@@ -59,6 +58,7 @@ if not os.path.exists("settings.json"):
         json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here', 'mentionmode': 'mentionmode_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
         settings = None
 
+from discord.ext import commands
 with open("settings.json", "r") as settings_file:
     settings = json.load(settings_file)
     email = settings['email']
