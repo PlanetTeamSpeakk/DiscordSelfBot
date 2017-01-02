@@ -1,2 +1,2 @@
 discord.py
-pip --upgrade
+pip
