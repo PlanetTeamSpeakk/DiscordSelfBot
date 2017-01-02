@@ -838,7 +838,7 @@ async def on_message(message):
                         await say(msgchan, mentionmsg)
                     
 async def command(message, cmd, del_msg):
-    if message.content.lower().startswith(prefix + cmd):
+    if message.content.lower().startswith(prefix.lower() + cmd):
         if message.author.id in whitelist:
             if del_msg:
                 try:
