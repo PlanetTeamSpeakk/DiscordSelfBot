@@ -78,15 +78,19 @@ with open("settings.json", "r") as settings_file:
                 email = input("What's your Discord email address?\n")
                 password = input("What's your Discord password?\n")
                 prefix = input("What should your prefix be?\n")
-                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message)\n(choose from legit or fast)\n")
+                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond. You can always set this later with {}mentionset\n".format(prefix))
+                if mentionmsg != "None":
+                    mentionmode = input("Do you want the message that the bot sends when you get mentioned to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message)\n(choose from legit or fast)\n")
                 invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
                 settings['email'] = email
                 settings['password'] = password
                 settings['prefix'] = prefix
                 settings['mentionmsg'] = mentionmsg
                 settings['invite'] = invite
-                settings['mentionmode'] = mentionmode
+                if mentionmsg != "None":
+                    settings['mentionmode'] = mentionmode
+                else:
+                    settings['mentionmode'] = "fast"
                 bot = commands.Bot(command_prefix=prefix, description=description)
                 settings_file = None
                 with open("settings.json", "w") as settings_file:
@@ -95,7 +99,7 @@ with open("settings.json", "r") as settings_file:
     
 @bot.event
 async def on_ready():
-    print("\nStarted at {}".format(started.strftime("%d %b %Y %H:%M")))
+    print("Started on {}".format(started.strftime("%d %b %Y %H:%M")))
     print("DiscordSelfBot written by PlanetTeamSpeak#4157.\n")
     if "your_id" in whitelist:
         id = bot.user.id
@@ -834,7 +838,7 @@ async def on_message(message):
                         await say(msgchan, mentionmsg)
                     
 async def command(message, cmd, del_msg):
-    if message.content.startswith(prefix + cmd):
+    if message.content.lower().startswith(prefix + cmd):
         if message.author.id in whitelist:
             if del_msg:
                 try:
