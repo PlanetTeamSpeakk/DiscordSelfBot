@@ -50,7 +50,19 @@ except:
         import ffmpy
         print("FFMpy succesfully installed.")
     except:
-        sys.exit("FFMpy could not be installed, exiting...")
+        sys.exit("FFMpy didn't succesfully install, exiting...")
+try:
+    from cleverbot import Cleverbot as clv
+    clv.API_URL = "http://www.cleverbot.com/webservicemin?uc=321&"
+except:
+    print("You don't have cleverbot installed, installing it now...")
+    try:
+        check_output("pip3 install cleverbot", shell=True)
+        from cleverbot import Cleverbot as clv
+        clv.API_URL = "http://www.cleverbot.com/webservicemin?uc=321&"
+        print("Cleverbot succesfully installed.")
+    except:
+        sys.exit("Cleverbot didn't succesfully install, exiting...")
 
 started = datetime.datetime.now()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
@@ -79,7 +91,7 @@ with open("settings.json", "r") as settings_file:
                 password = input("What's your Discord password?\n")
                 prefix = input("What should your prefix be?\n")
                 mentionmsg = input("What should you respond when you get mentioned? Type None to not respond.\n")
-                mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message) (choose from legit/fast)\n")
+                mentionmode = input("Do you want the message that the bot sends to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message)\n(choose from legit or fast)\n")
                 invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
                 settings['email'] = email
                 settings['password'] = password
@@ -415,7 +427,11 @@ async def on_message(message):
         await say(msgchan, "Mention message set!")
             
     elif await command(message, "mentionmode ", True):
+        mentionmodes = ['legit', 'fast']
         new_mentionmode = message.content[len(prefix + "mentionmode "):]
+        if not new_mentionmode in mentionmodes:
+            await say(msgchan, "That's not a correct mentionmode, you can choose from `legit` or `fast`.")
+            return
         settings['mentionmode'] = new_mentionmode
         save_settings()
         await say(msgchan, "Mentionmode set!")
@@ -511,48 +527,6 @@ async def on_message(message):
             await bot.edit_message(message, "Fresh off the boat, from reddit, kid? heh I remember when I was just like you. Braindead. Lemme give you a tip so you can make it in this cyber sanctuary: never make jokes like that. You got no reputation here, you got no name, you got jackshit here. It's survival of the fittest and you ain't gonna survive long on 4chan by saying stupid jokes that your little hugbox cuntsucking reddit friends would upboat. None of that here. You don't upboat. You don't downboat. This ain't reddit, kid. This is 4chan. We have REAL intellectual discussion, something I don't think you're all that familiar with. You don't like it, you can hit the bricks on over to imgur, you daily show watching son of a bitch. I hope you don't tho. I hope you stay here and learn our ways. Things are different here, unlike any other place that the light of internet pop culture reaches. You can be anything here. Me ? heh, I'm a judge.. this place.... this place has a lot to offer... heh you'll see, kid . . . that is if you can handle it.")
         else:
             await say(msgchan, "Fresh off the boat, from reddit, kid? heh I remember when I was just like you. Braindead. Lemme give you a tip so you can make it in this cyber sanctuary: never make jokes like that. You got no reputation here, you got no name, you got jackshit here. It's survival of the fittest and you ain't gonna survive long on 4chan by saying stupid jokes that your little hugbox cuntsucking reddit friends would upboat. None of that here. You don't upboat. You don't downboat. This ain't reddit, kid. This is 4chan. We have REAL intellectual discussion, something I don't think you're all that familiar with. You don't like it, you can hit the bricks on over to imgur, you daily show watching son of a bitch. I hope you don't tho. I hope you stay here and learn our ways. Things are different here, unlike any other place that the light of internet pop culture reaches. You can be anything here. Me ? heh, I'm a judge.. this place.... this place has a lot to offer... heh you'll see, kid . . . that is if you can handle it.")
-    
-    elif await command(message, "discorole ", True):
-        await say(msgchan, "How many times do you want it to change?")
-        await asyncio.sleep(0.2)
-        times = await bot.wait_for_message(timeout=15, author=message.author)
-        times = int(times.content)
-        await say(msgchan, "What should the interval be?")
-        await asyncio.sleep(0.2)
-        interval = await bot.wait_for_message(timeout=15, author=message.author)
-        interval = int(interval.content)
-        role = message.content[len(prefix + "discorole "):]
-        roleObj = discord.utils.find(lambda r: r.name == role, message.server.roles)
-        if not roleObj:
-            await say(msgchan, "`{}` is not a valid role".format(role))
-            return
-        if interval < 2:
-            interval = 2
-        time = 0
-        while time < times:
-            colour = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
-            colour = int(colour, 16)
-            await bot.edit_role(message.server, roleObj, colour=discord.Colour(value=colour))
-            time = time + 1
-            await asyncio.sleep(interval)
-            
-    elif await command(message, "discoroleforever ", True):
-        await say(msgchan, "What should the interval be?")
-        await asyncio.sleep(0.2)
-        interval = await bot.wait_for_message(timeout=15, author=message.author)
-        interval = int(interval.content)
-        role = message.content[len(prefix + "discoroleforever "):]
-        roleObj = discord.utils.find(lambda r: r.name == role, message.server.roles)
-        if not roleObj:
-            await say(msgchan, "`{}` is not a valid role".format(role))
-            return
-        if interval < 2:
-            interval = 2
-        while True:
-            colour = ''.join([random.choice('0123456789ABCDEF') for x in range(6)])
-            colour = int(colour, 16)
-            await bot.edit_role(message.server, roleObj, colour=discord.Colour(value=colour))
-            await asyncio.sleep(interval)
     
     elif await command(message, "triggered", True):
         await say(msgchan, "http://i.imgur.com/zSddfUe.gif")
@@ -904,6 +878,7 @@ def save_settings():
 def reload_settings():
     settings = None
     with open("settings.json", "r") as settings_file:
+        settings = None
         settings = json.load(settings_file)
         email = settings['email']
         password = settings['password']
