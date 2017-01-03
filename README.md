@@ -75,6 +75,7 @@ For installation you will need
 - `[p]shorten <url>` Shortens a long url using bit.ly.
 - `[p]ping` Pong!
 - `[p]qrcode <url>` Makes a qr code of a url.
+- `[p]uptime` Shows the uptime.
 
 ## Annotations
 [] = optional.
