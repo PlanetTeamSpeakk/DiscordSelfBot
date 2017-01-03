@@ -70,8 +70,9 @@ with open("settings.json", "r") as settings_file:
     mentionmode = settings['mentionmode']
     bot = commands.Bot(command_prefix=prefix, description=description)
     settings_file = None
+    asked = False
     for key in settings:
-        if "_here" in key:
+        if "_here" in settings[key]:
             if not asked:
                 asked = True
                 print("First time setup, prepare your anus for some questions.")
@@ -99,7 +100,7 @@ with open("settings.json", "r") as settings_file:
     
 @bot.event
 async def on_ready():
-    print("Started on {}".format(started.strftime("%d %b %Y %H:%M")))
+    print("\nStarted on {}".format(started.strftime("%d %b %Y %H:%M")))
     print("DiscordSelfBot written by PlanetTeamSpeak#4157.\n")
     if "your_id" in whitelist:
         id = bot.user.id
