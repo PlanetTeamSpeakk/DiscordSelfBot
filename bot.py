@@ -262,7 +262,6 @@ async def on_message(message):
                     await say(msgchan, help_cmds)
                     help_cmds = ""
             await say(msgchan, help_cmds)
-            await say(msgchan, help_cmds)
             help_cmds = ""
             await say(msgchan, "TL;DR click here <https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>\nTo get information of a specific command type {}help <command>".format(prefix))
         else:
