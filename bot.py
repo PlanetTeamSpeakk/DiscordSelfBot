@@ -254,10 +254,14 @@ async def on_message(message):
         help_cmds = ""
         if cmd == "":
             for cmda in cmds:
-                help_cmds += "- `{}`: {}\n".format(cmda, cmds[cmda])
+                if len(cmda + cmds[cmda]) > 75:
+                    help_cmds += "- `{}`: {}...\n".format(cmda, cmds[cmda][:75])
+                else:
+                    help_cmds += "- `{}`: {}\n".format(cmda, cmds[cmda])
                 if len(help_cmds) > 1500:
                     await say(msgchan, help_cmds)
                     help_cmds = ""
+            await say(msgchan, help_cmds)
             await say(msgchan, help_cmds)
             help_cmds = ""
             await say(msgchan, "TL;DR click here <https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>\nTo get information of a specific command type {}help <command>".format(prefix))
