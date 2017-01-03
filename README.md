@@ -14,6 +14,7 @@ For installation you will need
 - Then just download and extract the bot, the rest will be automatically done.
 
 ## Commands
+- `[p]help` Shows all the commands and help for them.
 - `[p]restart` Restarts the bot.
 - `[p]boobs` Shows some boobs.
 - `[p]ass` Shows some ass.
@@ -55,8 +56,6 @@ For installation you will need
 - `[p]appache` Attack helicopter copypasta.
 - `[p]daddy` Daddy and me copypasta.
 - `[p]4chan` Found it on 4chan copypasta.
-- `[p]discorole <role>` Changes the role of a color every given amount of seconds.
-- `[p]discoroleforever <role>` Changes the role of a color every given amount of seconds but doesn't stop.
 - `[p]triggered` The triggered meme.
 - `[p]setprefix` Changes the prefix of the bot.
 - `[p]flirting101` The flirting101 copypasta.
