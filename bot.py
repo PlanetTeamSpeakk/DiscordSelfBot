@@ -229,7 +229,7 @@ with open("data/dsb/settings.json", "r") as settings_file:
     
 @bot.event
 async def on_ready():
-    print("\nStarted on {}".format(started.strftime("%d %b %Y %H:%M")))
+    print("\nStarted on {}".format(started.strftime("%d %b %Y %X")))
     print("DiscordSelfBot written by PlanetTeamSpeak#4157.\n")
     if "your_id" in whitelist:
         id = bot.user.id
@@ -258,7 +258,7 @@ async def on_message(message):
                     help_cmds += "- `{}`: {}...\n".format(cmda, cmds[cmda][:75])
                 else:
                     help_cmds += "- `{}`: {}\n".format(cmda, cmds[cmda])
-                if len(help_cmds) > 1500:
+                if len(help_cmds) > 1750:
                     await say(msgchan, help_cmds)
                     help_cmds = ""
             await say(msgchan, help_cmds)
