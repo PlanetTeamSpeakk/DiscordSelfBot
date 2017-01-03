@@ -8,6 +8,7 @@ import sys
 import asyncio
 import re
 import datetime
+import importlib
 from time import *
 from subprocess import check_output
 try:
@@ -53,13 +54,17 @@ except:
 
 started = datetime.datetime.now()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
-if not os.path.exists("settings.json"):
-    with open("settings.json", "w") as settings:
+if not os.path.exists("data"):
+    os.makedirs("data")
+if not os.path.exists("data/dsb"):
+    os.makedirs("data/dsb")
+if not os.path.exists("data/dsb/settings.json"):
+    with open("data/dsb/settings.json", "w") as settings:
         json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here', 'mentionmode': 'mentionmode_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
         settings = None
 
 from discord.ext import commands
-with open("settings.json", "r") as settings_file:
+with open("data/dsb/settings.json", "r") as settings_file:
     settings = json.load(settings_file)
     email = settings['email']
     password = settings['password']
@@ -94,7 +99,7 @@ with open("settings.json", "r") as settings_file:
                     settings['mentionmode'] = "fast"
                 bot = commands.Bot(command_prefix=prefix, description=description)
                 settings_file = None
-                with open("settings.json", "w") as settings_file:
+                with open("data/dsb/settings.json", "w") as settings_file:
                     json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
                 print("You're all set! Bot is starting")
     
@@ -432,14 +437,14 @@ async def on_message(message):
     elif await command(message, "whitelist add ", True):
         id = message.content[len(prefix + "whitelist add "):]
         settings['whitelist'].append(id)
-        with open("settings.json", "w") as settings_file:
+        with open("data/dsb/settings.json", "w") as settings_file:
             json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
         await say(msgchan, "Added user to whitelist!")
         
     elif await command(message, "whitelist remove ", True):
         id = message.content[len(prefix + "whitelist remove "):]
         settings['whitelist'].remove(id)
-        with open("settings.json", "w") as settings_file:
+        with open("data/dsb/settings.json", "w") as settings_file:
             json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
         await say(msgchan, "Removed user from the whitelist!")
     
@@ -864,13 +869,13 @@ async def command(message, cmd, del_msg):
         return False
         
 def save_settings():
-    with open("settings.json", "w") as settings_file:
+    with open("data/dsb/settings.json", "w") as settings_file:
         json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
     reload_settings()
     
 def reload_settings():
     settings = None
-    with open("settings.json", "r") as settings_file:
+    with open("data/dsb/settings.json", "r") as settings_file:
         settings = None
         settings = json.load(settings_file)
         email = settings['email']
