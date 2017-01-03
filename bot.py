@@ -8,7 +8,6 @@ import sys
 import asyncio
 import re
 import datetime
-import importlib
 from time import *
 from subprocess import check_output
 try:
@@ -112,6 +111,7 @@ cmds = {'help': 'Shows this screen.',
 'shorten': 'Shortens a link.',
 'ping': 'Pong!',
 'qrcode': 'Creates a qrcode of the given url.'
+'uptime': 'Shows the bots uptime'
 }
 
 cmds_usage = {'help': '{}help [command]',
@@ -173,7 +173,8 @@ cmds_usage = {'help': '{}help [command]',
 'penis': '{}penis <user_name>',
 'shorten': '{}shorten <link>',
 'ping': '{}ping',
-'qrcode': '{}qrcode <url>'
+'qrcode': '{}qrcode <url>',
+'uptime': '{}uptime'
 }
         
 started = datetime.datetime.now()
@@ -604,7 +605,7 @@ async def on_message(message):
         
     elif await command(message, "name ", True):
         name = message.content[len(prefix + "name "):]
-        await bot.edit_profile(settings['password'], name=name)
+        await bot.edit_profile(settings['password'], username=name)
         await say(msgchan, "Name set!")
         
     elif await command(message, "greentext ", False):
