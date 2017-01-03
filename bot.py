@@ -251,68 +251,15 @@ async def on_message(message):
     msgchan = message.channel
     if await command(message, "help", True):
         cmd = message.content[len(prefix + "help "):]
+        help_cmds = ""
         if cmd == "":
-            await say(msgchan, "Here you go,\n"
-            "- `{0}restart` Restarts the bot.\n"
-            "- `{0}boobs` Shows some boobs.\n"
-            "- `{0}ass` Shows some ass.\n"
-            "- `{0}say` Let's the bot say something.\n"
-            "- `{0}server owner` Shows the server owner.\n"
-            "- `{0}server name` Shows the server name.\n"
-            "- `{0}server sid` Shows the server id.\n"
-            "- `{0}server channelname` Shows the channelname.\n"
-            "- `{0}server cid` Shows the channel id.\n"
-            "- `{0}server time` Shows the server time.\n"
-            "- `{0}server roles` Shows the server roles.\n"
-            "- `{0}server emojis` Shows the server emojis.\n"
-            "- `{0}server users` Shows the server users.\n"
-            "- `{0}server channels` Shows the server channels.\n"
-            "- `{0}server compareids` Compares the id of the server and the channel to see if it's default.\n"
-            "- `{0}server icon` Shows the server icon.\n"
-            "- `{0}server info` Shows all information of the server.\n"
-            "- `{0}server channelinfo` Shows all information of the channel.\n"
-            "- `{0}server membercount` Counts all the members in the server.\n"
-            "- `{0}server rolecount` Counts all the roles of the server.\n"
-            "- `{0}server emojicount` Counts all the emojis of the server.\n"
-            "- `{0}server userinfo [user]` Shows information for a user, if None given it shows yours.\n"
-            "- `{0}server roleinfo <role>` Shows information for a role.\n"
-            "- `{0}download <download_url>` Downloads a file and puts it in the bots root folder so you don't have to.\n"
-            "- `{0}mentionset <mentionmsg>` Sets the message that the bot should send if you get mentioned.\n"
-            "- `{0}whitelist add <user_id>` Adds a user to the whitelist so they can use your selfbot too!\n"
-            "- `{0}whitelist remove <user_id>` Removes a user from the whitelist so they can't use your selfbot anymore.\n"
-            "- `{0}lenny` Prints out a lenny face.\n"
-            "- `{0}shrug` Shrugs.\n"
-            "- `{0}shutdown` Shuts down the bot.\n"
-            "- `{0}name <name>` Sets the bots name.\n"
-            "- `{0}greentext <text>` Prints out a green text.".format(prefix))
-            await say(msgchan, "- `{0}orangetext <text>` Prints out an orange text.\n"
-            "- `{0}bluetext <text>` Prints out a blue text.\n"
-            "- `{0}lmgtfy <search_quary>` Gives a lmgtfy link.\n"
-            "- `{0}navyseal` Navyseal copypasta.\n"
-            "- `{0}edgyshit` Edgyshit copypasta.\n"
-            "- `{0}goodshit` Goodshit copypasta.\n"
-            "- `{0}appache` Attack helicopter copypasta.\n"
-            "- `{0}daddy` Daddy and me copypasta.\n"
-            "- `{0}4chan` Found it on 4chan copypasta.\n"
-            "- `{0}triggered` The triggered meme.\n"
-            "- `{0}setprefix` Changes the prefix of the bot.\n"
-            "- `{0}flirting101` The flirting101 copypasta.\n"
-            "- `{0}setinvite <invite>` Sets the invite link to spam for\n"
-            "- `{0}spaminvite <times>` Spams the invite link of your server.\n"
-            "- `{0}spaminvitedm <message>` Sends the invite link of your server to everyone in the server where this command was sent to.\n"
-            "- `{0}discrim <discrim_number>` Tells you all the people you can see with the discrim you gave.\n"
-            "- `{0}emoteurl <emote_name>` Gives you an url for the given CUSTOM emote.\n"
-            "- `{0}genbotoauth <bot_name>` Generates an oauth url for the given bot, names no mentions.\n"
-            "- `{0}genoauth <id>` Generates an oauth url for the given id.\n"
-            "- `{0}calc <problem>` Calculates a math problem so you don't have to.\n"
-            "- `{0}avatar <user_name>` Shows the avatar of the given user, names no mentions.\n"
-            "- `{0}mentionmode <mode>` Sets the mention mode (legit or fast)\n"
-            "- `{0}convert <file_url>` Converts stuff like mp3, mp4, png to anything you like.\n"
-            "- `{0}ascii <text>` Converts text to ascii.\n"
-            "- `{0}penis <user_name>` Tells you how long someone's penis is, 100% accurate.\n"
-            "- `{0}shorten <url>` Shortens a long url using bit.ly.\n"
-            "- `{0}ping` Pong!\n"
-            "- `{0}qrcode <url>` Makes a qr code of a url.".format(prefix))
+            for cmda in cmds:
+                help_cmds += "- `{}`: {}\n".format(cmda, cmds[cmda])
+                if len(help_cmds) > 1500:
+                    await say(msgchan, help_cmds)
+                    help_cmds = ""
+            await say(msgchan, help_cmds)
+            help_cmds = ""
             await say(msgchan, "TL;DR click here <https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>\nTo get information of a specific command type {}help <command>".format(prefix))
         else:
             try:
