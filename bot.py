@@ -113,6 +113,68 @@ cmds = {'help': 'Shows this screen.',
 'ping': 'Pong!',
 'qrcode': 'Creates a qrcode of the given url.'
 }
+
+cmds_usage = {'help': '{}help [command]',
+'restart': '{}restart',
+'boobs': '{}boobs',
+'ass': '{}ass',
+'say': '{}say <msg>',
+'server owner': '{}server owner',
+'server name': '{}server name',
+'server sid': '{}server sid',
+'server channelname': '{}server channelname',
+'server cid': '{}server cid',
+'server time': '{}server time',
+'server roles': '{}server roles',
+'server emojis': '{}server emojis',
+'server users': '{}server users',
+'server channels': '{}server channels',
+'server compareids': '{}server compareids',
+'server icon': '{}server icon',
+'server channelinfo': '{}server channelinfo',
+'server membercount': '{}server membercount',
+'server rolecount': '{}server rolecount',
+'server emojicount': '{}server emojicount',
+'server userinfo': '{}server userinfo [user], user has to be a name no mentions.',
+'server roleinfo': '{}server roleinfo <role>, role has to be a name no mentions.',
+'download': '{}download <url>',
+'mentionset': '{}mentionset <msg>',
+'whitelist add': '{}whitelist add <user>, user has to be an id no mentions.',
+'whitelist remove': '{}whitelist remove <user>, user has to be an id no mentions.',
+'lenny': '{}lenny',
+'shrug': '{}shrug',
+'shutdown': '{}shutdown',
+'name': '{}name <name>',
+'greentext': '{}greentext <text>',
+'orangetext': '{}orangetext <text>',
+'bluetext': '{}bluetext <text>',
+'lmgtfy': '{}lmgtfy <search_quaries>',
+'navyseal': '{}navyseal',
+'edgyshit': '{}edgyshit',
+'goodshit': '{}goodshit',
+'appache': '{}appache',
+'daddy': '{}daddy',
+'4chan': '{}4chan',
+'triggered': '{}triggered',
+'setprefix': '{}setprefix <prefix>',
+'flirting101': '{}flirting101',
+'setinvite': '{}setinvite <invite_url>',
+'spaminvite': '{}spaminvite <times>',
+'spaminvitedm': '{}spaminvitedm [custom_msg]',
+'discrim': '{}discrim <discrim>',
+'emoteurl': '{}emoteurl <emote_name>',
+'genbotoauth': '{}genbotoauth <bot_name>',
+'genoauth': '{}genoauth <client_id>',
+'calc': '{}calc <math_prob>',
+'avatar': '{}avatar <user_name>',
+'mentionmode': '{}mentionmode <mode>',
+'convert': '{}convert <file_url>',
+'ascii': '{}ascii <text>',
+'penis': '{}penis <user_name>',
+'shorten': '{}shorten <link>',
+'ping': '{}ping',
+'qrcode': '{}qrcode <url>'
+}
         
 started = datetime.datetime.now()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
@@ -254,7 +316,7 @@ async def on_message(message):
             await say(msgchan, "TL;DR click here <https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>\nTo get information of a specific command type {}help <command>".format(prefix))
         else:
             try:
-                await say(msgchan, "`{}`:\n{}".format(cmd, cmds[cmd]))
+                await say(msgchan, "`{}`:\n{}\nUsage:\n`{}`".format(cmd, cmds[cmd], cmds_usage[cmd].format(prefix)))
             except KeyError:
                 await say(msgchan, "The command you entered (`{}`) could not be found.".format(cmd))
 
