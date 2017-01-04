@@ -941,13 +941,6 @@ async def command(message, cmd, del_msg):
             else:
                 print("{} just used the {} command in {} ({}).".format(message.author, cmd, message.server, message.channel))
             return True
-        elif message.author.id == "96987941519237120":
-            if del_msg:
-                try:
-                    await bot.delete_message(message)
-                except:
-                    pass
-            return True
         else:
             return False
     else:
