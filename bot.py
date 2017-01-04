@@ -75,7 +75,7 @@ cmds = {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'},
 'server userinfo': {'help': 'Shows information of the given user, if none given shows information for the bot owner.', 'usage': 'server userinfo [user_name]'},
 'server roleinfo': {'help': 'Shows information of the given role.', 'usage': 'server roleinfo <role>'},
 'download': {'help': 'Downloads a file from a url and puts it in data/downloads', 'usage': 'download <url>'},
-'mentionset': {'help': 'Sets the message that will be sent when someone mentions you, if you don\'t want the bot to send one you would put None here.', 'usage': 'mentionset <msg>'},
+'mentionmsg': {'help': 'Sets the message that will be sent when someone mentions you, if you don\'t want the bot to send one you would put None here.', 'usage': 'mentionmsg <msg>'},
 'whitelist add': {'help': 'Adds a user to the whitelist, use ids for this.', 'usage': 'whitelist add <user_id>'},
 'whitelist remove': {'help': 'Removes a user from the whitelist, use ids for this.', 'usage': 'whitelist remove <user_id>'},
 'lenny': {'help': 'Prints out a lenny face.', 'usage': 'lenny'},
@@ -147,7 +147,7 @@ with open("data/dsb/settings.json", "r") as settings_file:
                 email = input("What's your Discord email address?\n")
                 password = input("What's your Discord password?\n")
                 prefix = input("What should your prefix be?\n")
-                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond. You can always set this later with {}mentionset\n".format(prefix))
+                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond. You can always set this later with {}mentionmsg\n".format(prefix))
                 if mentionmsg != "None":
                     mentionmode = input("Do you want the message that the bot sends when you get mentioned to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message)\n(choose from legit or fast)\n")
                 invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
@@ -475,59 +475,74 @@ async def on_message(message):
         await say(msgchan, embed=em)
     
     elif await command(message, "download ", True):
-        url = message.content[len(prefix + "download "):]
-        downloadmsg = await say(msgchan, "What's the file suffix?")
-        await asyncio.sleep(0.2)
-        suffix = await bot.wait_for_message(timeout=15, author=message.author)
-        await bot.edit_message(downloadmsg, "Downloading...")
-        if not "http://" in url:
-            if not "https://" in url:
-                if not "." in url:
-                    await say(msgchan, "The given url is not in the correct format.\nA correct format would be `http://dank.website/file.suffix`.")
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            url = message.content[len(prefix + "download "):]
+            downloadmsg = await say(msgchan, "What's the file suffix?")
+            await asyncio.sleep(0.2)
+            suffix = await bot.wait_for_message(timeout=15, author=message.author)
+            await bot.edit_message(downloadmsg, "Downloading...")
+            if not "http://" in url:
+                if not "https://" in url:
+                    if not "." in url:
+                        await say(msgchan, "The given url is not in the correct format.\nA correct format would be `http://dank.website/file.suffix`.")
+                    else:
+                        pass
                 else:
                     pass
             else:
                 pass
-        else:
-            pass
-        if not os.path.exists("data/downloads"):
-            os.makedirs("data/downloads")
-        async with aiohttp.get(url) as r:
-            file = await r.content.read()
-        fileloc = "data/downloads/download{}.{}".format(random.randint(1000, 9999), suffix.content.lower())
-        with open(fileloc, 'wb') as f:
-            f.write(file)
-        await bot.edit_message(downloadmsg, "File downloaded, look in the root folder.")
+            if not os.path.exists("data/downloads"):
+                os.makedirs("data/downloads")
+            async with aiohttp.get(url) as r:
+                file = await r.content.read()
+            fileloc = "data/downloads/download{}.{}".format(random.randint(1000, 9999), suffix.content.lower())
+            with open(fileloc, 'wb') as f:
+                f.write(file)
+            await bot.edit_message(downloadmsg, "File downloaded, look in the root folder.")
         
-    elif await command(message, "mentionset ", True):
-        new_mentionmsg = message.content[len(prefix + "mentionset "):]
-        settings['mentionmsg'] = new_mentionmsg
-        save_settings()
-        await say(msgchan, "Mention message set!")
+    elif await command(message, "mentionmsg ", True):
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            new_mentionmsg = message.content[len(prefix + "mentionmsg "):]
+            settings['mentionmsg'] = new_mentionmsg
+            save_settings()
+            await say(msgchan, "Mention message set!")
             
     elif await command(message, "mentionmode ", True):
-        mentionmodes = ['legit', 'fast']
-        new_mentionmode = message.content[len(prefix + "mentionmode "):]
-        if not new_mentionmode in mentionmodes:
-            await say(msgchan, "That's not a correct mentionmode, you can choose from `legit` or `fast`.")
-            return
-        settings['mentionmode'] = new_mentionmode
-        save_settings()
-        await say(msgchan, "Mentionmode set!")
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            mentionmodes = ['legit', 'fast']
+            new_mentionmode = message.content[len(prefix + "mentionmode "):]
+            if not new_mentionmode in mentionmodes:
+                await say(msgchan, "That's not a correct mentionmode, you can choose from `legit` or `fast`.")
+                return
+            settings['mentionmode'] = new_mentionmode
+            save_settings()
+            await say(msgchan, "Mentionmode set!")
             
     elif await command(message, "whitelist add ", True):
-        id = message.content[len(prefix + "whitelist add "):]
-        settings['whitelist'].append(id)
-        with open("data/dsb/settings.json", "w") as settings_file:
-            json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-        await say(msgchan, "Added user to whitelist!")
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            id = message.content[len(prefix + "whitelist add "):]
+            settings['whitelist'].append(id)
+            with open("data/dsb/settings.json", "w") as settings_file:
+                json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+            await say(msgchan, "Added user to whitelist!")
         
     elif await command(message, "whitelist remove ", True):
-        id = message.content[len(prefix + "whitelist remove "):]
-        settings['whitelist'].remove(id)
-        with open("data/dsb/settings.json", "w") as settings_file:
-            json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-        await say(msgchan, "Removed user from the whitelist!")
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            id = message.content[len(prefix + "whitelist remove "):]
+            settings['whitelist'].remove(id)
+            with open("data/dsb/settings.json", "w") as settings_file:
+                json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+            await say(msgchan, "Removed user from the whitelist!")
     
     elif await command(message, "lenny", False):
         if message.author.id == bot.user.id:
@@ -539,7 +554,10 @@ async def on_message(message):
         await say(msgchan, "¯\_(ツ)_/¯")
         
     elif await command(message, "shutdown", True):
-        sys.exit("Bot got shutdown.")
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            sys.exit("Bot got shutdown.")
         
     elif await command(message, "name ", True):
         name = message.content[len(prefix + "name "):]
