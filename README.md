@@ -39,7 +39,7 @@ For installation you will need
 - `[p]server userinfo [user]` Shows information for a user, if None given it shows yours.
 - `[p]server roleinfo <role>` Shows information for a role.
 - `[p]download <download_url>` Downloads a file and puts it in the bots root folder so you don't have to.
-- `[p]mentionset <mentionmsg>` Sets the message that the bot should send if you get mentioned.
+- `[p]mentionmsg <msg>` Sets the message that the bot should send if you get mentioned.
 - `[p]whitelist add <user_id>` Adds a user to the whitelist so they can use your selfbot too!
 - `[p]whitelist remove <user_id>` Removes a user from the whitelist so they can't use your selfbot anymore.
 - `[p]lenny` Prints out a lenny face.
