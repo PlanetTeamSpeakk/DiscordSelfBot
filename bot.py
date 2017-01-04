@@ -175,7 +175,7 @@ cmds_usage = {'help': '{}help [command]',
 'shorten': '{}shorten <link>',
 'ping': '{}ping',
 'qrcode': '{}qrcode <url>',
-'uptime': '{}uptime'
+'uptime': '{}uptime',
 'clearconsole': '{}clearconsole'
 }
         
