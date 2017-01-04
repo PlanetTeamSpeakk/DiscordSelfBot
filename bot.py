@@ -110,7 +110,7 @@ cmds = {'help': 'Shows this screen.',
 'penis': 'Detects a users penis length, this is 100% accurate.',
 'shorten': 'Shortens a link.',
 'ping': 'Pong!',
-'qrcode': 'Creates a qrcode of the given url.'
+'qrcode': 'Creates a qrcode of the given url.',
 'uptime': 'Shows the bots uptime'
 }
 
