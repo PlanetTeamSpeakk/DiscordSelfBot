@@ -543,8 +543,11 @@ async def on_message(message):
         
     elif await command(message, "name ", True):
         name = message.content[len(prefix + "name "):]
-        await bot.edit_profile(settings['password'], username=name)
-        await say(msgchan, "Name set!")
+        if message.author.id != bot.user.id:
+            await say(msgchan, "You're not my owner.")
+        else:
+            await bot.edit_profile(settings['password'], username=name)
+            await say(msgchan, "Name set!")
         
     elif await command(message, "greentext ", False):
         text = message.content[len(prefix + "greentext "):]
