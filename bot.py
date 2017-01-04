@@ -192,8 +192,8 @@ async def on_message(message):
         cmd = message.content[len(prefix + "help "):]
         help_cmds = ""
         if cmd == "":
-            for cmda in cmds:
-                if len(cmda + cmds[cmda]) > 75:
+            for cmda in cmds.keys():
+                if len(cmda + cmds[cmda]['help']) > 75:
                     help_cmds += "- `{}`: {}...\n".format(cmda, cmds[cmda]['help'][:75])
                 else:
                     help_cmds += "- `{}`: {}\n".format(cmda, cmds[cmda]['help'])
