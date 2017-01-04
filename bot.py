@@ -111,7 +111,8 @@ cmds = {'help': 'Shows this screen.',
 'shorten': 'Shortens a link.',
 'ping': 'Pong!',
 'qrcode': 'Creates a qrcode of the given url.',
-'uptime': 'Shows the bots uptime'
+'uptime': 'Shows the bots uptime.',
+'clearconsole': 'Clears the console.'
 }
 
 cmds_usage = {'help': '{}help [command]',
@@ -175,6 +176,7 @@ cmds_usage = {'help': '{}help [command]',
 'ping': '{}ping',
 'qrcode': '{}qrcode <url>',
 'uptime': '{}uptime'
+'clearconsole': '{}clearconsole'
 }
         
 started = datetime.datetime.now()
@@ -968,6 +970,10 @@ async def on_message(message):
             
     elif await command(message, "uptime", True):
         await say(msgchan, "The bot has been on for **{}**.".format(datetime.datetime.now() - started))
+            
+    elif await command(message, "clearconsole", True):
+        print("\n" * 696969)
+        await say(msgchan, "Console cleared!")
             
     else:
         if message.content.startswith(prefix):
