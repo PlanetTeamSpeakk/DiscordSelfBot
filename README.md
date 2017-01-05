@@ -110,3 +110,5 @@ def setup(bot):
     bot.add_cog(myextension(bot))
 ```
 This will let the bot say "Hi" when you do [p]hi
+
+Save this as `myextension.py` in the extensions folder in your bot, then load it with [p]load myextension.
