@@ -124,6 +124,8 @@ If you want to add the commands that you made you would just have to put
 main.cmds['your_extension_name'] = {'command_one': {'help': 'What is this command for?', 'usage': 'how to use?'},
                                        'command_two': {'help': 'What is this command for?', 'usage': 'how to use?'}}
 ```
+Under \_\_init\_\_
+
 For example, with the extension I just made you would have to put there:
 
 ```py
