@@ -172,9 +172,6 @@ async def on_message(message):
     if await command(message, "restart", True):
         await main.say(msgchan, "Restarting...")
         bot.run(email, password)
-    
-    elif await command(message, "say ", True):
-        await say(msgchan, message.content[len(prefix + "say "):])
                     
 async def command(message, cmd, del_msg):
     if message.content.lower().startswith(prefix.lower() + cmd):
