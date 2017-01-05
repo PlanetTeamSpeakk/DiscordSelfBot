@@ -120,7 +120,7 @@ Save this as `myextension.py` in the extensions folder of your bot, then load it
 If you want to add the commands that you made you would just have to put
 ```py
 main.cmds['your_extension_name'] = {'command_one': {'help': 'What is this command for?', 'usage': 'how to use?'},
-                                       'command_two': {'help': 'What is this command for?', 'usage': 'howt to use?'}}
+                                       'command_two': {'help': 'What is this command for?', 'usage': 'how to use?'}}
 ```
 For example, with the extension I just made you would have to put there:
 ```py
