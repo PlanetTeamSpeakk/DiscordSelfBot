@@ -11,6 +11,7 @@ A nice selfbot for discord
 
 ## Installation
 For installation you will need 
+
 - [Python latest (v3 not v2)](http://python.org/getit/) **MAKE SURE TO ADD TO PATH**
 
 - [Git](http://git-scm.com) **DON'T CHANGE ANY OF THE SETTINGS**
