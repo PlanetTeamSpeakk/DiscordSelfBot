@@ -99,7 +99,7 @@ import discord
 import __main__ as main
 
 class myextension:
-    """My custom extension that does stuff!."""
+    """My custom extension that does stuff!"""
     
     def __init__(self, bot):
         self.bot = bot
