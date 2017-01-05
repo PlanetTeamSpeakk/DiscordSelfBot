@@ -131,10 +131,17 @@ async def on_message(message):
             help_cmds = ""
             await say(msgchan, "To get information of a specific command type {}help <command>".format(prefix))
         else:
-            try:
-                await say(msgchan, "`{}`:\n{}\n\nUsage:\n`{}`".format(cmd, cmds[cmd]['help'], main.prefix + cmds[cmd]['usage']))
-            except KeyError:
+            error = 0
+            for ext in cmds.keys():
+                try:
+                    temp = cmds[ext][cmd]['help']
+                    await say(msgchan, "`{}`:\n{}\n\nUsage:\n`{}`".format(cmd, cmds[ext][cmd]['help'], prefix + cmds[ext][cmd]['usage']))
+                except:
+                    temp = None
+                    error += 1
+            if error == len(cmds.keys()):
                 await say(msgchan, "The command you entered ({}) could not be found.".format(cmd))
+                
                 
 async def command(message, cmd, del_msg):
     if message.content.lower().startswith(prefix.lower() + cmd):
