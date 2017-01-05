@@ -106,9 +106,49 @@ class myextension:
         if await main.command(message, "hi", True):
             await main.say(msgchan, "Hi!")
             
+        elif await main.command(message, "Hello", True):
+            await main.say(msgchan, "Hello!")
+            
 def setup(bot):
     bot.add_cog(myextension(bot))
 ```
-This will let the bot say "Hi" when you do [p]hi
+This will let the bot say "Hi" when you do [p]hi and "Hello!" when you do [p]hello.
 
 Save this as `myextension.py` in the extensions folder of your bot, then load it with `[p]load myextension`.
+
+### Adding the commands to the help command
+If you want to add the commands that you made you would just have to put
+```py
+main.cmds['your_extension_name'] = {'command_one': {'help': 'What is this command for?', 'usage': 'how to use?'},
+                                       'command_two': {'help': 'What is this command for?', 'usage': 'howt to use?'}}
+```
+For example, with the extension I just made you would have to put there:
+```py
+main.cmds['myextension'] = {'hi': {'help': 'Let\'s the bot say hi!', 'usage': 'hi'},
+                            'hello': {'help': 'Let\'s the bot say hello!', 'usage': 'hello'}}
+```
+
+So the end result should look like:
+```py
+import discord
+import __main__ as main
+
+class myextension:
+    """My custom extension that does stuff!."""
+    
+    def __init__(self, bot):
+        self.bot = bot
+        main.cmds['myextension'] = {'hi': {'help': 'Let\'s the bot say hi!', 'usage': 'hi'},
+                                   'hello': {'help': 'Let\'s the bot say hello!', 'usage': 'hello'}}
+        
+    async def on_message(self, message):
+        msgchan = message.channel
+        if await main.command(message, "hi", True):
+            await main.say(msgchan, "Hi!")
+            
+        elif await main.command(message, "Hello", True):
+            await main.say(msgchan, "Hello!")
+            
+def setup(bot):
+    bot.add_cog(myextension(bot))
+```
