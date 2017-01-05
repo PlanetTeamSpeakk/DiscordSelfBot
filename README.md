@@ -107,6 +107,6 @@ class myextension:
             await main.say(msgchan, "Hi!")
             
 def setup(bot):
-    bot.add_cog(myextension(bot))```
-    
+    bot.add_cog(myextension(bot))
+```
 This will let the bot say "Hi" when you do [p]hi
