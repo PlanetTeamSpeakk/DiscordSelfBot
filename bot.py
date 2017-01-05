@@ -135,14 +135,13 @@ async def on_message(message):
             for ext in cmds.keys():
                 try:
                     temp = cmds[ext][cmd]['help']
-                    await say(msgchan, "`{}`:\n{}\n\nUsage:\n`{}`".format(cmd, cmds[ext][cmd]['help'], prefix + cmds[ext][cmd]['usage']))
+                    await say(msgchan, "`{}` ({}):\n{}\n\nUsage:\n`{}`".format(cmd, ext, cmds[ext][cmd]['help'], prefix + cmds[ext][cmd]['usage']))
                     temp = None
                 except:
                     temp = None
                     error += 1
             if error == len(cmds.keys()):
                 await say(msgchan, "The command you entered ({}) could not be found.".format(cmd))
-                
                 
 async def command(message, cmd, del_msg):
     if message.content.lower().startswith(prefix.lower() + cmd):
