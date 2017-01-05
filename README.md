@@ -3,6 +3,7 @@
 2. [Installation](#installation)
 3. [Commands](#commands)
 4. [Annotations](#annotations)
+5. [Creating your own extension](#extensions)
 
 ## Description
 A nice selfbot for discord
@@ -83,3 +84,29 @@ For installation you will need
 <> = needed.
 
 [p] = the prefix you set.
+
+## Extensions
+So you want to make your own extension?
+
+Well that's pretty easy, all you need to begin with is this:
+
+```py
+import discord
+from discord.ext import commands
+import __main__ as main
+
+class myextension:
+    """My custom extension that does stuff!."""
+    
+    def __init__(self, bot):
+        self.bot = bot
+        
+    async def on_message(self, message):
+        msgchan = message.channel
+        if await main.command(message, "hi", True):
+            await main.say(msgchan, "Hi!")
+            
+def setup(bot):
+    bot.add_cog(myextension(bot))```
+    
+This will let the bot say "Hi" when you do [p]hi
