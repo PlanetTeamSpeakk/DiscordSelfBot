@@ -54,6 +54,9 @@ PAUSE
 :updatebot
 del bot.py
 start /WAIT bitsadmin.exe /transfer "Downloading bot.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/bot.py %~dp0\bot.py
+if not EXIST extensions (
+mkdir extensions
+)
 del extensions\owner.py
 start /WAIT bitsadmin.exe /transfer "Downloading owner.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/extensions/owner.py %~dp0\extensions\owner.py
 del extensions\copypastas.py
