@@ -92,7 +92,6 @@ Well that's pretty easy, all you need to begin with is this:
 
 ```py
 import discord
-from discord.ext import commands
 import __main__ as main
 
 class myextension:
@@ -111,4 +110,4 @@ def setup(bot):
 ```
 This will let the bot say "Hi" when you do [p]hi
 
-Save this as `myextension.py` in the extensions folder in your bot, then load it with `[p]load myextension`.
+Save this as `myextension.py` in the extensions folder of your bot, then load it with `[p]load myextension`.
