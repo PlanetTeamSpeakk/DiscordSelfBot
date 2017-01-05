@@ -85,6 +85,13 @@ For installation you will need
 
 [p] = the prefix you set.
 
+# SOON
+# SOON
+# SOON
+# SOON
+# SOON
+# SOON
+# SOON
 ## Extensions
 So you want to make your own extension?
 
