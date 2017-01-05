@@ -138,6 +138,9 @@ class general:
         elif await main.command(message, "triggered", True):
             await main.say(msgchan, "http://i.imgur.com/zSddfUe.gif")
                 
+        elif await command(message, "say ", True):
+            await main.say(msgchan, message.content[len(prefix + "say "):])
+                
         for person in message.mentions:
             if message.author.id != self.bot.user.id:
                 if main.mentionmsg != "None":
