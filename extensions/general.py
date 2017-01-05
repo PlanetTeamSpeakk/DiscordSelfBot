@@ -25,30 +25,22 @@ class general:
     
     def __init__(self, bot):
         self.bot = bot
+        main.cmds['general'] = {'boobs': {'help': 'Shows some boobs.', 'usage': 'boobs'},
+                                    'ass': {'help': 'Shows some ass.', 'usage': 'ass'},
+                                    'say': {'help': 'Let\'s the bot say something.', 'usage': 'say <message>'},
+                                    'lenny': {'help': 'Prints out a lenny face.', 'usage': 'lenny'},
+                                    'shrug': {'help': 'Shrugs.', 'usage': 'shrug'},
+                                    'greentext': {'help': 'Makes your text green.', 'usage': 'greentext <text>'},
+                                    'orangetext': {'help': 'Makes your text orange.', 'usage': 'orangetext <text>'},
+                                    'bluetext': {'help': 'Makes your text blue. Looks pretty shitty tbh.', 'usage': 'bluetext <text>'},
+                                    'lmgtfy': {'help': 'Makes a lmgtfy (let me google that for you) link.', 'usage': 'lmgtfy <search_quarries>'},
+                                    'triggered': {'help': 'The h3h3 triggered meme gif.', 'usage': 'triggered'},
+                                    'uptime': {'help': 'Shows the bots uptime.', 'usage': 'uptime'},
+                                    'ascii': {'help': 'Converts text to ascii (figlet)', 'usage': 'ascii <text>'},
+                                    'penis': {'help': 'Detects a users penis length, this is 100% accurate.', 'usage': 'penis <user_name>'}}
         
     async def on_message(self, message):
         msgchan = message.channel
-        if await main.command(message, "help", True):
-            cmd = message.content[len(main.prefix + "help "):]
-            help_cmds = ""
-            if cmd == "":
-                for cmda in main.cmds.keys():
-                    if len(cmda + main.cmds[cmda]['help']) > 75:
-                        help_cmds += "- `{}`: {}...\n".format(cmda, main.cmds[cmda]['help'][:75])
-                    else:
-                        help_cmds += "- `{}`: {}\n".format(cmda, main.cmds[cmda]['help'])
-                    if len(help_cmds) > 1750:
-                        await main.say(msgchan, help_cmds)
-                        help_cmds = ""
-                await main.say(msgchan, help_cmds)
-                help_cmds = ""
-                await main.say(msgchan, "TL;DR click here <https://github.com/PlanetTeamSpeakk/DiscordSelfBot#commands>\nTo get information of a specific command type {}help <command>".format(main.prefix))
-            else:
-                try:
-                    await main.say(msgchan, "`{}`:\n{}\n\nUsage:\n`{}`".format(cmd, main.cmds[cmd]['help'], main.prefix + main.cmds[cmd]['usage']))
-                except KeyError:
-                    await main.say(msgchan, "The command you entered ({}) could not be found.".format(cmd))
-                
         if await main.command(message, "uptime", True):
             await main.say(msgchan, "The bot has been up for **{}**.".format(datetime.datetime.now() - main.started))
             
@@ -138,7 +130,7 @@ class general:
         elif await main.command(message, "triggered", True):
             await main.say(msgchan, "http://i.imgur.com/zSddfUe.gif")
                 
-        elif await command(message, "say ", True):
+        elif await main.command(message, "say ", True):
             await main.say(msgchan, message.content[len(prefix + "say "):])
                 
         for person in message.mentions:

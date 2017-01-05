@@ -41,64 +41,20 @@ class useful:
     
     def __init__(self, bot):
         self.bot = bot
+        main.cmds['useful'] = {'discrim': {'help': 'Searched through all members the bot can see to see if they have the given discriminator (the number after your name (example: YourName#4157))', 'usage': 'discrim <discrim'},
+                                'emoteurl': {'help': 'Gives the url for the given emote.', 'usage': 'emoteurl <emote_name>'},
+                                'genbotoauth': {'help': 'Generates an oauth url of the given bot.', 'usage': 'genbotoauth <bot_name>'},
+                                'genoauth': {'help': 'Generates an oauth url for the given client id.', 'usage': 'genoauth <client_id>'},
+                                'calc': {'help': 'Calculates a math problem so you don\'t have to.', 'usage': 'calc <problem>'},
+                                'avatar': {'help': 'Shows the avatar of the given user.', 'usage': 'avatar <user>'},
+                                'qrcode': {'help': 'Creates a qrcode of the given url.', 'usage': 'qrcode <url>'},
+                                'ping': {'help': 'Pong!', 'usage': 'ping'},
+                                'shorten': {'help': 'Shortens a link.', 'usage': 'shorten <url>'},
+                                'convert': {'help': 'Converts a file to something like mp4 mp3 png gif all that stuff.', 'usage': 'convert <file_url>'}}
         
     async def on_message(self, message):
         msgchan = message.channel
-        if await main.command(message, "setinvite ", True):
-            invite = message.content[len(main.prefix + "setinvite "):]
-            main.settings['invite'] = invite
-            main.save_settings()
-            await main.say(msgchan, "Invite set!")
-            
-        elif await main.command(message, "spaminvite ", True):
-            invite = settings['invite']
-            if invite is "None":
-                await main.say(msgchan, "You haven't set an invite link, set one with {}setinvite <invite>".format(main.prefix))
-            times = int(message.content[len(main.prefix + "spaminvite "):])
-            time = 0
-            while time < times:
-                time = time + 1
-                await main.say(msgchan, invite)
-      
-        elif await main.command(message, "spaminvitedm ", True):
-            msg = " " + message.content[len(main.prefix + "spaminvitedm "):]
-            invite = settings['invite']
-            dont_send = []
-            dont_send_roles = []
-            for role in message.server.roles:
-                if role.permissions.kick_members:
-                    dont_send_roles.append(role)
-            for role in dont_send_roles:
-                for member in message.server.members:
-                    if role in member.roles:
-                        dont_send.append(member)
-            sent = 0
-            members = []
-            if not os.path.exists("sent_list.json"):
-                with open("sent_list.json", "w") as sent_list_json:
-                    json.dump([], sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
-                    sent_list_json = None
-            with open("sent_list.json", "r") as sent_list_json:
-                sent_list = json.load(sent_list_json)
-                sent_list_json = None
-            for member in message.server.members:
-                members.append(member)
-            for member in members:
-                try:
-                    if member not in dont_send:
-                        if member.id not in sent_list:
-                            await self.bot.send_message(member, invite + msg)
-                            sent = sent + 1
-                            sent_list.append(member.id)
-                            print("Sent an invite to {} people.".format(sent))
-                            await asyncio.sleep(60) # There you go Nathan, happy now?
-                except:
-                    pass
-                with open("sent_list.json", "w") as sent_list_json:
-                    json.dump(sent_list, sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
-                    sent_list_json = None
-                
-        elif await main.command(message, "discrim ", True):
+        if await main.command(message, "discrim ", True):
             discriminator = message.content[len(main.prefix + "discrim "):].replace("#", "")
             if not discriminator.isdigit():
                 await main.say(msgchan, "A Discriminator can only have digits and a #\nExamples\n`#4157`, `4157`")
@@ -190,10 +146,6 @@ class useful:
             em.add_field(name=user.mention + "'s avatar", value=avatar)
             em.set_image(url=avatar)
             await main.say(msgchan, embed=em)
-            
-        elif await main.command(message, "clearconsole", True):
-            print("\n" * 696969)
-            await main.say(msgchan, "Console cleared!")
             
         elif await main.command(message, "qrcode ", True):
             link = message.content[len(main.prefix + "qrcode "):]

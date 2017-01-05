@@ -8,6 +8,24 @@ class serverinfo:
     
     def __init__(self, bot):
         self.bot = bot
+        main.cmds['serverinfo'] =  {'server owner': {'help': 'Shows the server owner.', 'usage': 'server owner'},
+                                        'server name': {'help': 'Shows the server name.', 'usage': 'server name'},
+                                        'server sid': {'help': 'Shows the server id.', 'usage': 'server sid'},
+                                        'server channelname': {'help': 'Shows the channel name.', 'usage': 'server channelname'},
+                                        'server cid': {'help': 'Shows the channel id.', 'usage': 'server cid'},
+                                        'server time': {'help': 'Shows the server time.', 'usage': 'server time'},
+                                        'server roles': {'help': 'Shows the server roles.', 'usage': 'server roles'},
+                                        'server emojis': {'help': 'Shows the server emojis.', 'usage': 'server emojis'},
+                                        'server users': {'help': 'Shows the server users.', 'usage': 'server users'},
+                                        'server channels': {'help': 'Shows the server channels', 'usage': 'server channels'},
+                                        'server compareids': {'help': 'Compares the ids of the server and the channel to see if it is default.', 'usage': 'server compareids'},
+                                        'server icon': {'help': 'Shows the server icon.', 'usage': 'server icon'},
+                                        'server channelinfo': {'help': 'Shows information of this channel.', 'usage': 'server channelinfo'},
+                                        'server membercount': {'help': 'Counts the members in this server.', 'usage': 'server membercount'},
+                                        'server rolecount': {'help': 'Counts the roles in this server.', 'usage': 'server rolecount'},
+                                        'server emojicount': {'help': 'Counts the emojis in this server.', 'usage': 'server emojicount'},
+                                        'server userinfo': {'help': 'Shows information of the given user, if none given shows information for the bot owner.', 'usage': 'server userinfo [user_name]'},
+                                        'server roleinfo': {'help': 'Shows information of the given role.', 'usage': 'server roleinfo <role>'}}
         
     async def on_message(self, message):
         msgchan = message.channel

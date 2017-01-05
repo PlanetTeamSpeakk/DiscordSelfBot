@@ -21,6 +21,18 @@ class owner:
         with open("data/dsb/extensions.json", "r") as extensions:
             self.extensions = json.load(extensions)
             extensions = None
+        main.cmds['owner'] = {'download': {'help': 'Downloads a file from a url and puts it in data/downloads', 'usage': 'download <url>'},
+                                'mentionmsg': {'help': 'Sets the message that will be sent when someone mentions you, if you don\'t want the bot to send one you would put None here.', 'usage': 'mentionmsg <msg>'},
+                                'whitelist add': {'help': 'Adds a user to the whitelist, use ids for this.', 'usage': 'whitelist add <user_id>'},
+                                'whitelist remove': {'help': 'Removes a user from the whitelist, use ids for this.', 'usage': 'whitelist remove <user_id>'},
+                                'shutdown': {'help': 'Shuts down the bot.', 'usage': 'shutdown'},
+                                'name': {'help': 'Sets the name of the owner of the bot, limited by Discord to twice per hour.', 'usage': 'name <name>'},
+                                'setprefix': {'help': 'Sets the prefix of the bot.', 'usage': 'setprefix <prefix>'},
+                                'setinvite': {'help': 'Sets the invite to send everybody for the spaminvite and spaminvitedm commands.', 'usage': 'setinvite <invite>'},
+                                'spaminvite': {'help': 'Spams the invite in the channel the command was sent.', 'usage': 'spaminvite <times>'},
+                                'spaminvitedm': {'help': 'Sends the invite to everyone in the server except for mods and admins.', 'usage': 'spaminvitedm <message>'},
+                                'mentionmode': {'help': 'Sets the mode the bot should use when you get mentioned (legit of fast)', 'usage': 'mentionmode <mode>'},
+                                'clearconsole': {'help': 'Clears the console.', 'usage': 'clearconsole'}}
         
     async def on_message(self, message):
         msgchan = message.channel
@@ -144,6 +156,64 @@ class owner:
                 main.settings['mentionmode'] = new_mentionmode
                 main.save_settings()
                 await main.say(msgchan, "Mentionmode set!")
+                
+            elif await main.command(message, "clearconsole", True):
+                print("\n" * 696969)
+                await main.say(msgchan, "Console cleared!")
+                
+            elif await main.command(message, "setinvite ", True):
+                invite = message.content[len(main.prefix + "setinvite "):]
+                main.settings['invite'] = invite
+                main.save_settings()
+                await main.say(msgchan, "Invite set!")
+                
+            elif await main.command(message, "spaminvite ", True):
+                invite = settings['invite']
+                if invite is "None":
+                    await main.say(msgchan, "You haven't set an invite link, set one with {}setinvite <invite>".format(main.prefix))
+                times = int(message.content[len(main.prefix + "spaminvite "):])
+                time = 0
+                while time < times:
+                    time = time + 1
+                    await main.say(msgchan, invite)
+          
+            elif await main.command(message, "spaminvitedm ", True):
+                msg = " " + message.content[len(main.prefix + "spaminvitedm "):]
+                invite = settings['invite']
+                dont_send = []
+                dont_send_roles = []
+                for role in message.server.roles:
+                    if role.permissions.kick_members:
+                        dont_send_roles.append(role)
+                for role in dont_send_roles:
+                    for member in message.server.members:
+                        if role in member.roles:
+                            dont_send.append(member)
+                sent = 0
+                members = []
+                if not os.path.exists("sent_list.json"):
+                    with open("sent_list.json", "w") as sent_list_json:
+                        json.dump([], sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
+                        sent_list_json = None
+                with open("sent_list.json", "r") as sent_list_json:
+                    sent_list = json.load(sent_list_json)
+                    sent_list_json = None
+                for member in message.server.members:
+                    members.append(member)
+                for member in members:
+                    try:
+                        if member not in dont_send:
+                            if member.id not in sent_list:
+                                await self.bot.send_message(member, invite + msg)
+                                sent = sent + 1
+                                sent_list.append(member.id)
+                                print("Sent an invite to {} people.".format(sent))
+                                await asyncio.sleep(60) # There you go Nathan, happy now?
+                    except:
+                        pass
+                    with open("sent_list.json", "w") as sent_list_json:
+                        json.dump(sent_list, sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
+                        sent_list_json = None
         
     def save_extensions(self):
         with open("data/dsb/extensions.json", "w") as extensions_file:

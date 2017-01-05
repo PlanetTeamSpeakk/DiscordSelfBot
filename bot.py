@@ -31,68 +31,8 @@ except:
     except:
         sys.exit("Pyfiglet didn't succesfully install, exiting...")
 
-cmds = {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'},
-'restart': {'help': 'Restarts the bot.', 'usage': 'restart'},
-'boobs': {'help': 'Shows some boobs.', 'usage': 'boobs'},
-'ass': {'help': 'Shows some ass.', 'usage': 'ass'},
-'say': {'help': 'Let\'s the bot say something.', 'usage': 'say <message>'},
-'server owner': {'help': 'Shows the server owner.', 'usage': 'server owner'},
-'server name': {'help': 'Shows the server name.', 'usage': 'server name'},
-'server sid': {'help': 'Shows the server id.', 'usage': 'server sid'},
-'server channelname': {'help': 'Shows the channel name.', 'usage': 'server channelname'},
-'server cid': {'help': 'Shows the channel id.', 'usage': 'server cid'},
-'server time': {'help': 'Shows the server time.', 'usage': 'server time'},
-'server roles': {'help': 'Shows the server roles.', 'usage': 'server roles'},
-'server emojis': {'help': 'Shows the server emojis.', 'usage': 'server emojis'},
-'server users': {'help': 'Shows the server users.', 'usage': 'server users'},
-'server channels': {'help': 'Shows the server channels', 'usage': 'server channels'},
-'server compareids': {'help': 'Compares the ids of the server and the channel to see if it is default.', 'usage': 'server compareids'},
-'server icon': {'help': 'Shows the server icon.', 'usage': 'server icon'},
-'server channelinfo': {'help': 'Shows information of this channel.', 'usage': 'server channelinfo'},
-'server membercount': {'help': 'Counts the members in this server.', 'usage': 'server membercount'},
-'server rolecount': {'help': 'Counts the roles in this server.', 'usage': 'server rolecount'},
-'server emojicount': {'help': 'Counts the emojis in this server.', 'usage': 'server emojicount'},
-'server userinfo': {'help': 'Shows information of the given user, if none given shows information for the bot owner.', 'usage': 'server userinfo [user_name]'},
-'server roleinfo': {'help': 'Shows information of the given role.', 'usage': 'server roleinfo <role>'},
-'download': {'help': 'Downloads a file from a url and puts it in data/downloads', 'usage': 'download <url>'},
-'mentionmsg': {'help': 'Sets the message that will be sent when someone mentions you, if you don\'t want the bot to send one you would put None here.', 'usage': 'mentionmsg <msg>'},
-'whitelist add': {'help': 'Adds a user to the whitelist, use ids for this.', 'usage': 'whitelist add <user_id>'},
-'whitelist remove': {'help': 'Removes a user from the whitelist, use ids for this.', 'usage': 'whitelist remove <user_id>'},
-'lenny': {'help': 'Prints out a lenny face.', 'usage': 'lenny'},
-'shrug': {'help': 'Shrugs.', 'usage': 'shrug'},
-'shutdown': {'help': 'Shuts down the bot.', 'usage': 'shutdown'},
-'name': {'help': 'Sets the name of the owner of the bot, limited by Discord to twice per hour.', 'usage': 'name <name>'},
-'greentext': {'help': 'Makes your text green.', 'usage': 'greentext <text>'},
-'orangetext': {'help': 'Makes your text orange.', 'usage': 'orangetext <text>'},
-'bluetext': {'help': 'Makes your text blue. Looks pretty shitty tbh.', 'usage': 'bluetext <text>'},
-'lmgtfy': {'help': 'Makes a lmgtfy (let me google that for you) link.', 'usage': 'lmgtfy <search_quarries>'},
-'navyseal': {'help': 'Prints the navyseal copypasta.', 'usage': 'navyseal'},
-'edgyshit': {'help': 'Prints the edgyshit copypasta.', 'usage': 'edgyshit'},
-'goodshit': {'help': 'Prints the goodshit copypasta.', 'usage': 'goodshit'},
-'appache': {'help': 'Prints the attack helicopter copypasta.', 'usage': 'appache'},
-'daddy': {'help': 'Prints the daddy copypasta.', 'usage': 'daddy'},
-'4chan': {'help': 'Prints the 4chan copypasta.', 'usage': '4chan'},
-'triggered': {'help': 'The h3h3 triggered meme gif.', 'usage': 'triggered'},
-'setprefix': {'help': 'Sets the prefix of the bot.', 'usage': 'setprefix <prefix>'},
-'flirting101': {'help': 'Prints the flirting101 copypasta.', 'usage': 'flirting101'},
-'setinvite': {'help': 'Sets the invite to send everybody for the spaminvite and spaminvitedm commands.', 'usage': 'setinvite <invite>'},
-'spaminvite': {'help': 'Spams the invite in the channel the command was sent.', 'usage': 'spaminvite <times>'},
-'spaminvitedm': {'help': 'Sends the invite to everyone in the server except for mods and admins.', 'usage': 'spaminvitedm <message>'},
-'discrim': {'help': 'Searched through all members the bot can see to see if they have the given discriminator (the number after your name (example: YourName#4157))', 'usage': 'discrim <discrim'},
-'emoteurl': {'help': 'Gives the url for the given emote.', 'usage': 'emoteurl <emote_name>'},
-'genbotoauth': {'help': 'Generates an oauth url of the given bot.', 'usage': 'genbotoauth <bot_name>'},
-'genoauth': {'help': 'Generates an oauth url for the given client id.', 'usage': 'genoauth <client_id>'},
-'calc': {'help': 'Calculates a math problem so you don\'t have to.', 'usage': 'calc <problem>'},
-'avatar': {'help': 'Shows the avatar of the given user.', 'usage': 'avatar <user>'},
-'mentionmode': {'help': 'Sets the mode the bot should use when you get mentioned (legit of fast)', 'usage': 'mentionmode <mode>'},
-'convert': {'help': 'Converts a file to something like mp4 mp3 png gif all that stuff.', 'usage': 'convert <file_url>'},
-'ascii': {'help': 'Converts text to ascii (figlet)', 'usage': 'ascii <text>'},
-'penis': {'help': 'Detects a users penis length, this is 100% accurate.', 'usage': 'penis <user_name>'},
-'shorten': {'help': 'Shortens a link.', 'usage': 'shorten <url>'},
-'ping': {'help': 'Pong!', 'usage': 'ping'},
-'qrcode': {'help': 'Creates a qrcode of the given url.', 'usage': 'qrcode <url>'},
-'uptime': {'help': 'Shows the bots uptime.', 'usage': 'uptime'},
-'clearconsole': {'help': 'Clears the console.', 'usage': 'clearconsole'}
+cmds = {'No Category': {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'},
+'restart': {'help': 'Restarts the bot.', 'usage': 'restart'}},
 }
         
 started = datetime.datetime.now()
@@ -170,9 +110,32 @@ async def on_ready():
 async def on_message(message):
     msgchan = message.channel
     if await command(message, "restart", True):
-        await main.say(msgchan, "Restarting...")
+        await say(msgchan, "Restarting...")
         bot.run(email, password)
                     
+    if await command(message, "help", True):
+        cmd = message.content[len(prefix + "help "):]
+        help_cmds = ""
+        if cmd == "":
+            for ext in cmds.keys():
+                help_cmds += "\n**{}**:\n".format(ext)
+                for cmda in cmds[ext].keys():
+                    if len(cmda + cmds[ext][cmda]['help']) > 70:
+                        help_cmds += "\t- `{}`: {}...\n".format(cmda, cmds[ext][cmda]['help'][:70])
+                    else:
+                        help_cmds += "\t- `{}`: {}\n".format(cmda, cmds[ext][cmda]['help'])
+                    if len(help_cmds) > 1750:
+                        await say(msgchan, help_cmds)
+                        help_cmds = ""
+            await say(msgchan, help_cmds)
+            help_cmds = ""
+            await say(msgchan, "To get information of a specific command type {}help <command>".format(prefix))
+        else:
+            try:
+                await say(msgchan, "`{}`:\n{}\n\nUsage:\n`{}`".format(cmd, cmds[cmd]['help'], main.prefix + cmds[cmd]['usage']))
+            except KeyError:
+                await say(msgchan, "The command you entered ({}) could not be found.".format(cmd))
+                
 async def command(message, cmd, del_msg):
     if message.content.lower().startswith(prefix.lower() + cmd):
         if message.author.id in whitelist:

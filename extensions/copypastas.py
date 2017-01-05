@@ -7,6 +7,13 @@ class copypastas:
     
     def __init__(self, bot):
         self.bot = bot
+        main.cmds['copypastas'] = {'navyseal': {'help': 'Prints the navyseal copypasta.', 'usage': 'navyseal'},
+                                    'edgyshit': {'help': 'Prints the edgyshit copypasta.', 'usage': 'edgyshit'},
+                                    'goodshit': {'help': 'Prints the goodshit copypasta.', 'usage': 'goodshit'},
+                                    'appache': {'help': 'Prints the attack helicopter copypasta.', 'usage': 'appache'},
+                                    'daddy': {'help': 'Prints the daddy copypasta.', 'usage': 'daddy'},
+                                    '4chan': {'help': 'Prints the 4chan copypasta.', 'usage': '4chan'},
+                                    'flirting101': {'help': 'Prints the flirting101 copypasta.', 'usage': 'flirting101'}}
         
     async def on_message(self, message):
         msgchan = message.channel
