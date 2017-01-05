@@ -136,6 +136,7 @@ async def on_message(message):
                 try:
                     temp = cmds[ext][cmd]['help']
                     await say(msgchan, "`{}`:\n{}\n\nUsage:\n`{}`".format(cmd, cmds[ext][cmd]['help'], prefix + cmds[ext][cmd]['usage']))
+                    temp = None
                 except:
                     temp = None
                     error += 1
