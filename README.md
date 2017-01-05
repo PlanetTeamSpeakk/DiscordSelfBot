@@ -1,9 +1,10 @@
 # DiscordSelfBot
-1. [Description](#description)
-2. [Installation](#installation)
-3. [Commands](#commands)
-4. [Annotations](#annotations)
-5. [Creating your own extension](#extensions)
+1. [Better view](http://planetteamspeakk.github.io/DiscordSelfBot)
+2. [Description](#description)
+3. [Installation](#installation)
+4. [Commands](#commands)
+5. [Annotations](#annotations)
+6. [Creating your own extension](#extensions)
 
 ## Description
 A nice selfbot for discord
