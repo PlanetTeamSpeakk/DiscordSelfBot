@@ -31,9 +31,7 @@ except:
     except:
         sys.exit("Pyfiglet didn't succesfully install, exiting...")
 
-cmds = {'No Category': {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'},
-'restart': {'help': 'Restarts the bot.', 'usage': 'restart'}},
-}
+cmds = {'No Category': {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'}}}
         
 started = datetime.datetime.now()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
@@ -108,11 +106,7 @@ async def on_ready():
     
 @bot.event
 async def on_message(message):
-    msgchan = message.channel
-    if await command(message, "restart", True):
-        await say(msgchan, "Restarting...")
-        bot.run(email, password)
-                    
+    msgchan = message.channel                    
     if await command(message, "help", True):
         cmd = message.content[len(prefix + "help "):]
         help_cmds = ""
