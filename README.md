@@ -1,10 +1,11 @@
 # DiscordSelfBot
 1. [Better view](http://planetteamspeakk.github.io/DiscordSelfBot)
-2. [Description](#description)
-3. [Installation](#installation)
-4. [Commands](#commands)
-5. [Annotations](#annotations)
-6. [Creating your own extension](#extensions)
+2. [Download](https://github.com/PlanetTeamSpeakk/DiscordSelfBot/archive/master.zip)
+3. [Description](#description)
+4. [Installation](#installation)
+5. [Commands](#commands)
+6. [Annotations](#annotations)
+7. [Creating your own extension](#extensions)
 
 ## Description
 A nice selfbot for discord
@@ -143,7 +144,7 @@ import discord
 import __main__ as main
 
 class myextension:
-    """My custom extension that does stuff!."""
+    """My custom extension that does stuff!"""
     
     def __init__(self, bot):
         self.bot = bot
