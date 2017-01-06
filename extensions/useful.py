@@ -260,7 +260,31 @@ class useful:
                 await main.say(msgchan, "{}, here you go <{}>.".format(message.author.mention, shorten.short(url)))
             else:
                 await main.say(msgchan, "You think I can shorten an empty string for you? That's not gonna work.")
-            
+                
+        elif await main.command(message, "ctof ", True):
+            celsius = message.content[len(main.prefix + "ctof "):]
+            if (celsius == "") or not (self.is_digit(celsius)):
+                await main.say(msgchan, "I can't convert an empty string to fahrenheit. Neither can I convert words.")
+            else:
+                celsius = float(celsius)
+                await main.say(msgchan, "{}°C = {}°F ({}°K)".format(celsius, celsius * float(1.8) + 32, celsius - 273))
+
+        elif await main.command(message, "ftoc ", True):
+            fahrenheit = message.content[len(main.prefix + "ftoc "):]
+            if (fahrenheit == "") or not (self.is_digit(fahrenheit)):
+                await main.say(msgchan, "I can't convert an empty string to celsius. Neither can I convert words.")
+            else:
+                fahrenheit = float(fahrenheit)
+                await main.say(msgchan, "{}°F = {}°C ({}°K)".format(fahrenheit, (fahrenheit - 32) / float(1.8), ((fahrenheit - 32) / float(1.8)) - 273))
+        
+    def is_digit(self, digit):
+        check = re.compile('\d+(\.\d+)?')
+        check2 = re.compile('\d+(\d+)?')
+        if (check.match(digit)) or (check2.match(digit)):
+            return True
+        else:
+            return False
+        
 def setup(bot):
     if error:
         raise RuntimeError("A library was not installed, could not load extension.")
