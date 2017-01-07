@@ -53,7 +53,7 @@ with open("data/dsb/settings.json", "r") as settings_file:
     mentionmsg = settings['mentionmsg']
     invite = settings['invite']
     mentionmode = settings['mentionmode']
-    bot = commands.Bot(command_prefix=prefix, description=description)
+    bot = commands.Bot(command_prefix=prefix, description=description, self_bot=True)
     settings_file = None
     asked = False
     for key in settings:
@@ -64,20 +64,12 @@ with open("data/dsb/settings.json", "r") as settings_file:
                 email = input("What's your Discord email address?\n")
                 password = input("What's your Discord password?\n")
                 prefix = input("What should your prefix be?\n")
-                mentionmsg = input("What should you respond when you get mentioned? Type None to not respond. You can always set this later with {}mentionmsg\n".format(prefix))
-                if mentionmsg != "None":
-                    mentionmode = input("Do you want the message that the bot sends when you get mentioned to look legit (waits 2 secs, sends typing for 2 secs, sends message)\nOr would you like it to be fast (just send the message)\n(choose from legit or fast)\n")
                 invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
                 settings['email'] = email
                 settings['password'] = password
                 settings['prefix'] = prefix
-                settings['mentionmsg'] = mentionmsg
                 settings['invite'] = invite
-                if mentionmsg != "None":
-                    settings['mentionmode'] = mentionmode
-                else:
-                    settings['mentionmode'] = "fast"
-                bot = commands.Bot(command_prefix=prefix, description=description)
+                bot = commands.Bot(command_prefix=prefix, description=description, self_bot=True)
                 settings_file = None
                 with open("data/dsb/settings.json", "w") as settings_file:
                     json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
