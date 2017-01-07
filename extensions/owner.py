@@ -80,7 +80,7 @@ class owner:
                         self.bot.load_extension("extensions." + extension)
                         await main.say(msgchan, "Extension reloaded.")
                     except Exception as e:
-                        print(e.args[0])
+                        print(e)
                         await main.say(msgchan, "An error occured while reloading the extension, check your console for more information.")
                 
             elif await main.command(message, "extensions", True):
