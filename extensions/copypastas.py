@@ -13,7 +13,11 @@ class copypastas:
                                     'appache': {'help': 'Prints the attack helicopter copypasta.', 'usage': 'appache'},
                                     'daddy': {'help': 'Prints the daddy copypasta.', 'usage': 'daddy'},
                                     '4chan': {'help': 'Prints the 4chan copypasta.', 'usage': '4chan'},
-                                    'flirting101': {'help': 'Prints the flirting101 copypasta.', 'usage': 'flirting101'}}
+                                    'flirting101': {'help': 'Prints the flirting101 copypasta.', 'usage': 'flirting101'},
+                                    'thelegend27': {'help': 'Prints the TheLegend27 copypasta.', 'usage': 'thelegend27'},
+                                    'genji': {'help': 'Prints the Genji copypasta.', 'usage': 'genji'},
+                                    'dweebs': {'help': 'Prints the dweebs copypasta.', 'usage': 'dweebs'},
+                                    'shenanigans': {'help': 'Prints the shenanigans copypasta.', 'usage': 'shenanigans'}}
         
     async def on_message(self, message):
         msgchan = message.channel
@@ -53,11 +57,35 @@ class copypastas:
             else:
                 await main.say(msgchan, "Fresh off the boat, from reddit, kid? heh I remember when I was just like you. Braindead. Lemme give you a tip so you can make it in this cyber sanctuary: never make jokes like that. You got no reputation here, you got no name, you got jackshit here. It's survival of the fittest and you ain't gonna survive long on 4chan by saying stupid jokes that your little hugbox cuntsucking reddit friends would upboat. None of that here. You don't upboat. You don't downboat. This ain't reddit, kid. This is 4chan. We have REAL intellectual discussion, something I don't think you're all that familiar with. You don't like it, you can hit the bricks on over to imgur, you daily show watching son of a bitch. I hope you don't tho. I hope you stay here and learn our ways. Things are different here, unlike any other place that the light of internet pop culture reaches. You can be anything here. Me ? heh, I'm a judge.. this place.... this place has a lot to offer... heh you'll see, kid . . . that is if you can handle it.")
         
-        elif await main.command(message, "flirting101", True):
+        elif await main.command(message, "flirting101", False):
             if main.is_owner(message.author):
                 await self.bot.edit_message(message, "Hey, sorry I saw your profile and I just thought you looked cute in your picture, I really wanted to tell you that)) It's really rare to see girls playing video games haha! I don't know why its a guy thing honestly im like really against misogyny and like ill be the one in the kitchen making sandwiches. We should really play l4d2 sometime its a really cool zombie game with a lot of scary moments, but don't worry ill be there to protect you :wink: sorry that wasnt flirting I swear Im just trying to be friendly I really like your profile picture sorry was that too far? Really sorry i'm really shy I don't go out much haha add me on skype we should talk more you look really nice and fun xxx")
             else:
                 await main.say(msgchan, "Hey, sorry I saw your profile and I just thought you looked cute in your picture, I really wanted to tell you that)) It's really rare to see girls playing video games haha! I don't know why its a guy thing honestly im like really against misogyny and like ill be the one in the kitchen making sandwiches. We should really play l4d2 sometime its a really cool zombie game with a lot of scary moments, but don't worry ill be there to protect you :wink: sorry that wasnt flirting I swear Im just trying to be friendly I really like your profile picture sorry was that too far? Really sorry i'm really shy I don't go out much haha add me on skype we should talk more you look really nice and fun xxx")
             
+        elif await main.command(message, "thelegend27", False):
+            if main.is_owner(message.author):
+                await self.bot.edit_message(message, "I sexually Identify as TheLegend27. Ever since I was a boy I dreamed of soaring over the armies of my enemies hurling big, hard boulders at disgusting cavalry. People say to me that a person being TheLegend27 is Impossible and I’m * retarded but I don’t care, I’m beautiful. I’m having a plastic surgeon install Game of War: Fire Age, trebuchets and 90kg stones on my body.")
+            else:
+                await main.say(msgchan, "I sexually Identify as TheLegend27. Ever since I was a boy I dreamed of soaring over the armies of my enemies hurling big, hard boulders at disgusting cavalry. People say to me that a person being TheLegend27 is Impossible and I’m * retarded but I don’t care, I’m beautiful. I’m having a plastic surgeon install Game of War: Fire Age, trebuchets and 90kg stones on my body.")
+                
+        elif await main.command(message, "genji", False):
+            if main.is_owner(message.author):
+                await self.bot.edit_message(message, "I sexually Identify as a Genji. Ever since I was a boy I dreamed of dashing through Hanamura swift striking the enemy team. People say to me that being Genji is Useless and I’m not Getting any Kills but I don’t care. I’m having a plastic surgeon install cyborg parts,a shuriken dispenser and a dragonblade on my body. From now on I want you guys to call me Genji and respect my right to play team deathmatch in Overwatch. Ryūjin no ken o kurae!")
+            else:
+                await main.say(msgchan, "I sexually Identify as a Genji. Ever since I was a boy I dreamed of dashing through Hanamura swift striking the enemy team. People say to me that being Genji is Useless and I’m not Getting any Kills but I don’t care. I’m having a plastic surgeon install cyborg parts,a shuriken dispenser and a dragonblade on my body. From now on I want you guys to call me Genji and respect my right to play team deathmatch in Overwatch. Ryūjin no ken o kurae!")
+                
+        elif await main.command(message, "dweebs", False):
+            if main.is_owner(message.author):
+                await self.bot.edit_message(message, "Listen up you fcking dweebs, this is a WAKE UP CALL to all those who type \"NA ULT LUL\". I'm from NA and let me tell you what happens when I use my Ultimate Ability (Q on PC, Triangle on PS4, Y on X-box 1). The enemy team is eviscerated. Decimated. Their souls are expelled from the server and banished to Hell. They wallow in their own filth and shit for 10,000 days and it is disgusting. So next time you type \"NA ULT LUL\" you fcking remember this post.")
+            else:
+                await main.say(msgchan, "Listen up you fcking dweebs, this is a WAKE UP CALL to all those who type \"NA ULT LUL\". I'm from NA and let me tell you what happens when I use my Ultimate Ability (Q on PC, Triangle on PS4, Y on X-box 1). The enemy team is eviscerated. Decimated. Their souls are expelled from the server and banished to Hell. They wallow in their own filth and shit for 10,000 days and it is disgusting. So next time you type \"NA ULT LUL\" you fcking remember this post.")
+                
+        elif await main.command(message, "shenanigans", False):
+            if main.is_owner(message.author):
+                await self.bot.edit_message(message, "Okay, listen up chat. I'm done with your shenanigans. I try day in and day out to spam dank ass memes, and what do I get in return? Just the same old, unoriginal spam from you parrots. Chat is filled with just lul xD and 12 year olds cringing. I'm done. I'm out. And I swear to god, don't even think about copying this message")
+            else:
+                await main.say(msgchan, "Okay, listen up chat. I'm done with your shenanigans. I try day in and day out to spam dank ass memes, and what do I get in return? Just the same old, unoriginal spam from you parrots. Chat is filled with just lul xD and 12 year olds cringing. I'm done. I'm out. And I swear to god, don't even think about copying this message")
+                
 def setup(bot):
     bot.add_cog(copypastas(bot))
