@@ -22,7 +22,6 @@ class owner:
             self.extensions = json.load(extensions)
             extensions = None
         main.cmds['owner'] = {'download': {'help': 'Downloads a file from a url and puts it in data/downloads', 'usage': 'download <url>'},
-                                'mentionmsg': {'help': 'Sets the message that will be sent when someone mentions you, if you don\'t want the bot to send one you would put None here.', 'usage': 'mentionmsg <msg>'},
                                 'whitelist add': {'help': 'Adds a user to the whitelist, use ids for this.', 'usage': 'whitelist add <user_id>'},
                                 'whitelist remove': {'help': 'Removes a user from the whitelist, use ids for this.', 'usage': 'whitelist remove <user_id>'},
                                 'shutdown': {'help': 'Shuts down the bot.', 'usage': 'shutdown'},
@@ -31,7 +30,6 @@ class owner:
                                 'setinvite': {'help': 'Sets the invite to send everybody for the spaminvite and spaminvitedm commands.', 'usage': 'setinvite <invite>'},
                                 'spaminvite': {'help': 'Spams the invite in the channel the command was sent.', 'usage': 'spaminvite <times>'},
                                 'spaminvitedm': {'help': 'Sends the invite to everyone in the server except for mods and admins.', 'usage': 'spaminvitedm <message>'},
-                                'mentionmode': {'help': 'Sets the mode the bot should use when you get mentioned (legit of fast)', 'usage': 'mentionmode <mode>'},
                                 'clearconsole': {'help': 'Clears the console.', 'usage': 'clearconsole'}}
         
     async def on_message(self, message):
@@ -82,7 +80,7 @@ class owner:
                         self.bot.load_extension("extensions." + extension)
                         await main.say(msgchan, "Extension reloaded.")
                     except Exception as e:
-                        print(e)
+                        print(e.args[0])
                         await main.say(msgchan, "An error occured while reloading the extension, check your console for more information.")
                 
             elif await main.command(message, "extensions", True):
@@ -140,22 +138,6 @@ class owner:
                 with open(fileloc, 'wb') as f:
                     f.write(file)
                 await self.bot.edit_message(downloadmsg, "File downloaded, look in the root folder.")
-                
-            elif await main.command(message, "mentionmsg ", True):
-                new_mentionmsg = message.content[len(main.prefix + "mentionmsg "):]
-                main.settings['mentionmsg'] = new_mentionmsg
-                main.save_settings()
-                await main.say(msgchan, "Mention message set!")
-                    
-            elif await main.command(message, "mentionmode ", True):
-                mentionmodes = ['legit', 'fast']
-                new_mentionmode = message.content[len(main.prefix + "mentionmode "):]
-                if not new_mentionmode in mentionmodes:
-                    await main.say(msgchan, "That's not a correct mentionmode, you can choose from `legit` or `fast`.")
-                    return
-                main.settings['mentionmode'] = new_mentionmode
-                main.save_settings()
-                await main.say(msgchan, "Mentionmode set!")
                 
             elif await main.command(message, "clearconsole", True):
                 print("\n" * 696969)

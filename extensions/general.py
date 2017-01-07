@@ -132,18 +132,6 @@ class general:
                 
         elif await main.command(message, "say ", True):
             await main.say(msgchan, message.content[len(prefix + "say "):])
-                
-        for person in message.mentions:
-            if message.author.id != self.bot.user.id:
-                if main.mentionmsg != "None":
-                    if person.id == self.bot.user.id:
-                        if main.mentionmode == "legit":
-                            await asyncio.sleep(2)
-                            await bot.send_typing(message.channel)
-                            await asyncio.sleep(2)
-                            await main.say(msgchan, mentionmsg)
-                        elif main.mentionmode == "fast":
-                            await main.say(msgchan, mentionmsg)
             
 def setup(bot):
     if error:
