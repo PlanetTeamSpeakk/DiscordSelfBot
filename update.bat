@@ -52,20 +52,32 @@ echo https://twentysix26.github.io/Red-Docs/red_install_windows/#software
 PAUSE
 
 :updatebot
+if exist bot.py (
 del bot.py
+)
 start /WAIT bitsadmin.exe /transfer "Downloading bot.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/bot.py %~dp0\bot.py
-if not EXIST extensions (
+if not exist extensions (
 mkdir extensions
 )
+if exist extensions\owner.py (
 del extensions\owner.py
+)
 start /WAIT bitsadmin.exe /transfer "Downloading owner.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/extensions/owner.py %~dp0\extensions\owner.py
+if exist extensions\copypastas.py (
 del extensions\copypastas.py
+)
 start /WAIT bitsadmin.exe /transfer "Downloading copypastas.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/extensions/copypastas.py %~dp0\extensions\copypastas.py
+if exist extensions\general.py (
 del extensions\general.py
+)
 start /WAIT bitsadmin.exe /transfer "Downloading general.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/extensions/general.py %~dp0\extensions\general.py
+if exist extensions\serverinfo.py (
 del extensions\serverinfo.py
+)
 start /WAIT bitsadmin.exe /transfer "Downloading serverinfo.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/extensions/serverinfo.py %~dp0\extensions\serverinfo.py
+if exist extensions\useful.py (
 del extensions\useful.py
+)
 start /WAIT bitsadmin.exe /transfer "Downloading useful.py" /priority HIGH https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/extensions/useful.py %~dp0\extensions\useful.py
 
 :end
