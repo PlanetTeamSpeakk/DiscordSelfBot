@@ -182,9 +182,7 @@ try:
     bot.load_extension("extensions.owner")
 except Exception as e:
     print("Failed to load owner:\n{}".format(e))
-    
-asyncio.sleep(2.5)
-
+asyncio.sleep(0.1)
 with open("data/dsb/extensions.json", "r") as extensions:
     extensions = json.load(extensions)
         
