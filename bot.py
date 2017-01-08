@@ -73,7 +73,7 @@ with open("data/dsb/settings.json", "r") as settings_file:
                 settings_file = None
                 with open("data/dsb/settings.json", "w") as settings_file:
                     json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                print("You're all set! Bot is starting")
+                print("You're all set! Bot is starting, don't mind the unclosed client session part, just wait a bit.")
     
 @bot.event
 async def on_ready():
@@ -181,8 +181,10 @@ def is_owner(member):
 try:
     bot.load_extension("extensions.owner")
 except Exception as e:
-    print("Failed to load owner:\n{}".format(e))    
-      
+    print("Failed to load owner:\n{}".format(e))
+    
+asyncio.sleep(2.5)
+
 with open("data/dsb/extensions.json", "r") as extensions:
     extensions = json.load(extensions)
         
