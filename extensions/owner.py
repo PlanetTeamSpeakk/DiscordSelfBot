@@ -150,7 +150,7 @@ class owner:
                 await main.say(msgchan, "Invite set!")
                 
             elif await main.command(message, "spaminvite ", True):
-                invite = settings['invite']
+                invite = main.settings['invite']
                 if invite is "None":
                     await main.say(msgchan, "You haven't set an invite link, set one with {}setinvite <invite>".format(main.prefix))
                 times = int(message.content[len(main.prefix + "spaminvite "):])
@@ -161,7 +161,7 @@ class owner:
           
             elif await main.command(message, "spaminvitedm ", True):
                 msg = " " + message.content[len(main.prefix + "spaminvitedm "):]
-                invite = settings['invite']
+                invite = main.settings['invite']
                 dont_send = []
                 dont_send_roles = []
                 for role in message.server.roles:
@@ -173,11 +173,13 @@ class owner:
                             dont_send.append(member)
                 sent = 0
                 members = []
-                if not os.path.exists("sent_list.json"):
-                    with open("sent_list.json", "w") as sent_list_json:
+                if not exist("data/owner"):
+                    os.makedirs("data/owner")
+                if not os.path.exists("data/owner/sent_list.json"):
+                    with open("data/owner/sent_list.json", "w") as sent_list_json:
                         json.dump([], sent_list_json, indent=4, sort_keys=True, separators=(',', ' : '))
                         sent_list_json = None
-                with open("sent_list.json", "r") as sent_list_json:
+                with open("data/owner/sent_list.json", "r") as sent_list_json:
                     sent_list = json.load(sent_list_json)
                     sent_list_json = None
                 for member in message.server.members:
