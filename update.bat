@@ -46,7 +46,7 @@ PAUSE
 GOTO end
 
 :gitmessage
-echo Git is either not installed or not in the PATH environment variable. Install it again and add it to PATH like shown in the picture
+echo Git is either not installed or not in the PATH environment variable. Install it again and add it to PATH.
 PAUSE
 
 :updatebot
