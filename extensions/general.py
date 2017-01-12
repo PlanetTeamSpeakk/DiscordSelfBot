@@ -26,23 +26,24 @@ class general:
     def __init__(self, bot):
         self.bot = bot
         main.cmds['general'] = {'boobs': {'help': 'Shows some boobs.', 'usage': 'boobs'},
-                                    'ass': {'help': 'Shows some ass.', 'usage': 'ass'},
-                                    'say': {'help': 'Let\'s the bot say something.', 'usage': 'say <message>'},
-                                    'lenny': {'help': 'Prints out a lenny face.', 'usage': 'lenny'},
-                                    'shrug': {'help': 'Shrugs.', 'usage': 'shrug'},
-                                    'greentext': {'help': 'Makes your text green.', 'usage': 'greentext <text>'},
-                                    'orangetext': {'help': 'Makes your text orange.', 'usage': 'orangetext <text>'},
-                                    'bluetext': {'help': 'Makes your text blue. Looks pretty shitty tbh.', 'usage': 'bluetext <text>'},
-                                    'lmgtfy': {'help': 'Makes a lmgtfy (let me google that for you) link.', 'usage': 'lmgtfy <search_quarries>'},
-                                    'triggered': {'help': 'The h3h3 triggered meme gif.', 'usage': 'triggered'},
-                                    'uptime': {'help': 'Shows the bots uptime.', 'usage': 'uptime'},
-                                    'ascii': {'help': 'Converts text to ascii (figlet)', 'usage': 'ascii <text>'},
-                                    'penis': {'help': 'Detects a users penis length, this is 100% accurate.', 'usage': 'penis <user_name>'}}
+                                'ass': {'help': 'Shows some ass.', 'usage': 'ass'},
+                                'say': {'help': 'Let\'s the bot say something.', 'usage': 'say <message>'},
+                                'lenny': {'help': 'Prints out a lenny face.', 'usage': 'lenny'},
+                                'shrug': {'help': 'Shrugs.', 'usage': 'shrug'},
+                                'greentext': {'help': 'Makes your text green.', 'usage': 'greentext <text>'},
+                                'orangetext': {'help': 'Makes your text orange.', 'usage': 'orangetext <text>'},
+                                'bluetext': {'help': 'Makes your text blue. Looks pretty shitty tbh.', 'usage': 'bluetext <text>'},
+                                'lmgtfy': {'help': 'Makes a lmgtfy (let me google that for you) link.', 'usage': 'lmgtfy <search_quarries>'},
+                                'triggered': {'help': 'The h3h3 triggered meme gif.', 'usage': 'triggered'},
+                                'uptime': {'help': 'Shows the bots uptime.', 'usage': 'uptime'},
+                                'ascii': {'help': 'Converts text to ascii (figlet)', 'usage': 'ascii <text>'},
+                                'penis': {'help': 'Detects a users penis length, this is 100% accurate.', 'usage': 'penis <user_name>'}}
         
     async def on_message(self, message):
         msgchan = message.channel
         if await main.command(message, "uptime", True):
-            await main.say(msgchan, "The bot has been up for **{}**.".format(datetime.datetime.now() - main.started))
+            uptime = datetime.datetime.utcnow() - main.started
+            await main.say(msgchan, "The bot has been up for **{} hour(s), {} minute(s) and {} second(s)**.".format(uptime.seconds//3600, (uptime.seconds//60)%60, uptime.seconds%60))
             
         elif await main.command(message, "penis", True):
             user = message.content[len(main.prefix + "penis "):]
