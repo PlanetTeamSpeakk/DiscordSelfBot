@@ -33,7 +33,7 @@ except:
 
 cmds = {'No Category': {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'}}}
         
-started = datetime.datetime.now()
+started = datetime.datetime.utcnow()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
 if not os.path.exists("data"):
     os.makedirs("data")
@@ -41,7 +41,7 @@ if not os.path.exists("data/dsb"):
     os.makedirs("data/dsb")
 if not os.path.exists("data/dsb/settings.json"):
     with open("data/dsb/settings.json", "w") as settings:
-        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'mentionmsg': 'mentionmsg_here', 'invite': 'invite_here', 'mentionmode': 'mentionmode_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
+        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'invite': 'invite_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
         settings = None
 from discord.ext import commands
 with open("data/dsb/settings.json", "r") as settings_file:
@@ -50,9 +50,7 @@ with open("data/dsb/settings.json", "r") as settings_file:
     password = settings['password']
     whitelist = settings['whitelist']
     prefix = settings['prefix']
-    mentionmsg = settings['mentionmsg']
     invite = settings['invite']
-    mentionmode = settings['mentionmode']
     bot = commands.Bot(command_prefix=prefix, description=description, self_bot=True)
     settings_file = None
     asked = False
@@ -75,9 +73,12 @@ with open("data/dsb/settings.json", "r") as settings_file:
                     json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
                 print("You're all set! Bot is starting, don't mind the unclosed client session part, just wait a bit.")
     
+print("Logging in...")
+    
 @bot.event
 async def on_ready():
-    print("\nStarted on {}".format(started.strftime("%d %b %Y %X")))
+    login_time = datetime.datetime.utcnow() - started
+    print("\nLogin succesfull, took {}ms, started on {}.".format(login_time.seconds + login_time.microseconds/1E6, started.strftime("%d %b %Y %X")))
     print("DiscordSelfBot written by PlanetTeamSpeak#4157.\n")
     if "your_id" in whitelist:
         id = bot.user.id
@@ -161,9 +162,7 @@ def reload_settings():
         password = settings['password']
         prefix = settings['prefix']
         whitelist = settings['whitelist']
-        mentionmsg = settings['mentionmsg']
         invite = settings['invite']
-        mentionmode = settings['mentionmode']
         settings_file = None
         
 async def say(channel, message=None, embed=None):
