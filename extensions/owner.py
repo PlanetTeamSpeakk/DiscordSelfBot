@@ -173,7 +173,7 @@ class owner:
                             dont_send.append(member)
                 sent = 0
                 members = []
-                if not exist("data/owner"):
+                if not os.path.exists("data/owner"):
                     os.makedirs("data/owner")
                 if not os.path.exists("data/owner/sent_list.json"):
                     with open("data/owner/sent_list.json", "w") as sent_list_json:
