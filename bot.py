@@ -1,4 +1,3 @@
-import logging
 import aiohttp
 import random
 import json
@@ -8,6 +7,7 @@ import sys
 import asyncio
 import re
 import datetime
+import requests
 from time import *
 from subprocess import check_output
 try:
@@ -73,8 +73,20 @@ with open("data/dsb/settings.json", "r") as settings_file:
                     json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
                 print("You're all set! Bot is starting, don't mind the unclosed client session part, just wait a bit.")
     
-print("Logging in...")
+dry_run = False
     
+version = "1.2"
+print("Checking for updates...")
+response = requests.get("https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/version.json")
+new_version = json.loads(response.content.decode("utf-8"))
+new_version = new_version[0]
+if new_version != version:
+    sys.exit("There was an update detected, update it by running update.bat as administrator.")
+if dry_run:
+    sys.exit("Dry run, no updates found exiting...")
+else:
+    print("No updates found, logging in...")
+
 @bot.event
 async def on_ready():
     login_time = datetime.datetime.utcnow() - started
