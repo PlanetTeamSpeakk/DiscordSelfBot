@@ -3,9 +3,10 @@
 2. [Download](https://github.com/PlanetTeamSpeakk/DiscordSelfBot/archive/master.zip)
 3. [Description](#description)
 4. [Installation](#installation)
-5. [Commands](#commands)
-6. [Annotations](#annotations)
-7. [Creating your own extension](#extensions)
+5. [Token](#token)
+6. [Commands](#commands)
+7. [Annotations](#annotations)
+8. [Creating your own extension](#extensions)
 
 ## Description
 A nice selfbot for discord
@@ -18,6 +19,20 @@ For installation you will need
 - [Git](http://git-scm.com) **DON'T CHANGE ANY OF THE SETTINGS**
 
 - Then just download and extract the bot, the rest will be automatically done.
+
+## Token
+How to get your token:
+**On Discord App**:
+  1. Press ctrl/cmd+shift+i
+  2. Press the 2 arrows next to each other in the top. (https://cdn.impulsebot.com/RUQzKW71Yz.png)
+  3. Click 'Application'. (https://cdn.impulsebot.com/xrU5OwDIxu.png)
+  4. Click 'Local Storage'. (https://cdn.impulsebot.com/Yc20dD5Igu.png)
+  5. Click whatever URL you can see there. (https://cdn.impulsebot.com/StsccmaCHU.png)
+  6. Double click 'token'. (https://cdn.impulsebot.com/kdtDPvDeGi.png)
+  7. Press ctrl/cmd+c.
+  8. When pasting it is not required to remove the double quotes, but you can.
+**On Discord Website**:
+  The same as above but you press F12 (above the backspace) instead of ctrl/cmd+shift+i.
 
 ## Commands
 - `[p]help` Shows all the commands and help for them.
