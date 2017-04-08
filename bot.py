@@ -31,9 +31,26 @@ except:
     except:
         sys.exit("Pyfiglet didn't succesfully install, exiting...")
 
+def setup(settings):
+    print("First time setup, prepare your anus for some questions.")
+    token = input("What's your Discord token? (To see how to get it go to https://github.com/PlanetTeamSpeakk/DiscordSelfBot#token)\n")
+    if token.startswith("\""):
+        token = token[1:]
+    if token.endswith("\""):
+        token = token[:(len(token) - 1)]
+    prefix = input("What should your prefix be?\n")
+    invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
+    settings['token'] = token
+    settings['prefix'] = prefix
+    settings['invite'] = invite
+    bot = commands.Bot(command_prefix=prefix, description=description, self_bot=True)
+    settings_file = None
+    with open("data/dsb/settings.json", "w") as settings_file:
+        json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
+    print("You're all set! Bot is starting, don't mind the unclosed client session part, just wait a bit.")
+        
 cmds = {'No Category': {'help': {'help': 'Shows this screen.', 'usage': 'help [command]'}}}
         
-started = datetime.datetime.utcnow()
 description = "A Discord SelfBot written by PlanetTeamSpeak#4157."
 if not os.path.exists("data"):
     os.makedirs("data")
@@ -41,13 +58,14 @@ if not os.path.exists("data/dsb"):
     os.makedirs("data/dsb")
 if not os.path.exists("data/dsb/settings.json"):
     with open("data/dsb/settings.json", "w") as settings:
-        json.dump({'email': 'email_here', 'password': 'password_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'invite': 'invite_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
+        json.dump({'token': 'token_here', 'whitelist': ['your_id'], 'prefix': 'prefix_here', 'invite': 'invite_here'}, settings, indent=4, sort_keys=True, separators=(',', ' : '))
         settings = None
 from discord.ext import commands
 with open("data/dsb/settings.json", "r") as settings_file:
     settings = json.load(settings_file)
-    email = settings['email']
-    password = settings['password']
+    if 'token' not in settings.keys():
+        setup(settings)
+    token = settings['token']
     whitelist = settings['whitelist']
     prefix = settings['prefix']
     invite = settings['invite']
@@ -56,32 +74,17 @@ with open("data/dsb/settings.json", "r") as settings_file:
     asked = False
     for key in settings:
         if "_here" in settings[key]:
-            if not asked:
-                asked = True
-                print("First time setup, prepare your anus for some questions.")
-                email = input("What's your Discord email address?\n")
-                password = input("What's your Discord password?\n")
-                prefix = input("What should your prefix be?\n")
-                invite = input("What's the permanent invite link for you Discord server? Type None if you don't have one.\n")
-                settings['email'] = email
-                settings['password'] = password
-                settings['prefix'] = prefix
-                settings['invite'] = invite
-                bot = commands.Bot(command_prefix=prefix, description=description, self_bot=True)
-                settings_file = None
-                with open("data/dsb/settings.json", "w") as settings_file:
-                    json.dump(settings, settings_file, indent=4, sort_keys=True, separators=(',', ' : '))
-                print("You're all set! Bot is starting, don't mind the unclosed client session part, just wait a bit.")
-    
+            setup(settings)
+            break
+
+started = datetime.datetime.utcnow()
 dry_run = False
     
 version = "1.2"
 print("Checking for updates...")
-response = requests.get("https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/version.json")
-new_version = json.loads(response.content.decode("utf-8"))
-new_version = new_version[0]
+new_version = requests.get("https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/version.json").json()[0]
 if new_version != version:
-    sys.exit("There was an update detected, update it by running update.bat as administrator.")
+    update = input("An update was detected, please update the bot by downloading it from https://github.com/PlanetTeamSpeakk/DiscordSelfBot/archive/master.zip")
 if dry_run:
     sys.exit("Dry run, no updates found exiting...")
 else:
@@ -170,8 +173,7 @@ def reload_settings():
     with open("data/dsb/settings.json", "r") as settings_file:
         settings = None
         settings = json.load(settings_file)
-        email = settings['email']
-        password = settings['password']
+        email = settings['token']
         prefix = settings['prefix']
         whitelist = settings['whitelist']
         invite = settings['invite']
@@ -203,4 +205,5 @@ for extension in extensions:
             bot.load_extension("extensions." + extension)
         except Exception as e:
             print("Failed to load {}:\n{}".format(extension, e))
-bot.run(email, password)
+print(token)
+bot.run(token, bot=False)
