@@ -205,5 +205,4 @@ for extension in extensions:
             bot.load_extension("extensions." + extension)
         except Exception as e:
             print("Failed to load {}:\n{}".format(extension, e))
-print(token)
 bot.run(token, bot=False)
