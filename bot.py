@@ -89,11 +89,11 @@ with open("data/dsb/settings.json", "r") as settings_file:
 started = datetime.datetime.utcnow()
 dry_run = False
     
-version = "1.3.2"
+version = "1.3.3"
 print("Checking for updates...")
 new_version = requests.get("https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/version.json").json()[0]
 if new_version != version:
-    update = input("An update was detected, please update the bot by running update.bat. (Your version: {}, newest version: {})".format(version, new_version))
+    sys.exit("An update was detected, please update the bot by running update.bat. (Your version: {}, newest version: {})".format(version, new_version))
 if dry_run:
     sys.exit("Dry run, no updates found exiting...")
 else:
