@@ -7,9 +7,18 @@ import sys
 import asyncio
 import re
 import datetime
-import requests
-from time import *
 from subprocess import check_output
+try:
+    import requests
+except:
+    print("You don't have requests installed, installing it now...")
+    check_output("pip3 install requests", shell=True)
+    try:
+        import requests
+        print("Requests successfully installed.")
+    except:
+        sys.exit("Requests didn't successfully install, exiting...")
+from time import *
 try:
 	import discord
 except:
@@ -17,9 +26,9 @@ except:
     try:
         check_output("pip3 install discord.py", shell=True)
         import discord
-        print("Discord.py succesfully installed.")
+        print("Discord.py successfully installed.")
     except:
-        sys.exit("Discord.py didn't succesfully install, exiting...")
+        sys.exit("Discord.py didn't successfully install, exiting...")
 try:
     from pyfiglet import figlet_format
 except:
@@ -27,9 +36,9 @@ except:
     try:
         check_output("pip3 install pyfiglet", shell=True)
         import pyfiglet
-        print("Pyfiglet succesfully installed.")
+        print("Pyfiglet successfully installed.")
     except:
-        sys.exit("Pyfiglet didn't succesfully install, exiting...")
+        sys.exit("Pyfiglet didn't successfully install, exiting...")
 
 def setup(settings):
     print("First time setup, prepare your anus for some questions.")
@@ -80,7 +89,7 @@ with open("data/dsb/settings.json", "r") as settings_file:
 started = datetime.datetime.utcnow()
 dry_run = False
     
-version = "1.3.1"
+version = "1.3.2"
 print("Checking for updates...")
 new_version = requests.get("https://raw.githubusercontent.com/PlanetTeamSpeakk/DiscordSelfBot/master/version.json").json()[0]
 if new_version != version:
@@ -205,4 +214,18 @@ for extension in extensions:
             bot.load_extension("extensions." + extension)
         except Exception as e:
             print("Failed to load {}:\n{}".format(extension, e))
-bot.run(token, bot=False)
+e = None
+try:
+    bot.run(token, bot=False)
+except Exception as e:
+    while e != None:
+        print("An improper token has been passed, please insert a proper one.")
+        token = input("> ")
+        try:
+            bot.run(token, bot=False)
+            settings['token'] = token
+            save_settings()
+            e = None
+        except Exception as e:
+            pass
+    
